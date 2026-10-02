@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>معمل الشقوق الحمضية · تعريف الأنيونات</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #fff;
+      --tx: #1b1f24;
+      --mut: #667;
+      --ac: #1a6fd4;
+      --bd: #d9dde3;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #15181c;
+        --card: #1f242a;
+        --tx: #eceff3;
+        --mut: #9aa3ad;
+        --ac: #5aa2ff;
+        --bd: #343b44;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #15181c;
+      --card: #1f242a;
+      --tx: #eceff3;
+      --mut: #9aa3ad;
+      --ac: #5aa2ff;
+      --bd: #343b44;
+    }
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px);
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--tx);
+      font-family: system-ui, "Segoe UI", Tahoma, sans-serif;
+      padding: 12px;
+      max-width: 640px;
+      margin-inline: auto;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 6px 0;
+    }
+    .c {
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+    button, select {
+      font: inherit;
+      color: var(--tx);
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin: 3px;
+      cursor: pointer;
+    }
+    button:active { background: var(--bd); }
+    .g {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .tube {
+      width: 46px;
+      height: 110px;
+      border: 3px solid var(--mut);
+      border-top: none;
+      border-radius: 0 0 24px 24px;
+      margin: 6px auto;
+      position: relative;
+      overflow: hidden;
+      background: #fcfcfc;
+    }
+    .liq {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 70%;
+      transition: .4s;
+      background: rgba(120, 180, 255, .3);
+    }
+    .ppt {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 0;
+      transition: .4s;
+      background: transparent;
+    }
+    .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .log div {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--bd);
+      font-size: 14px;
+    }
+    .m {
+      color: var(--mut);
+      font-size: 13px;
+    }
+    h3 {
+      margin: 4px 0;
+      font-size: 15px;
+    }
+    .ok {
+      color: #1a8f3c;
+      font-weight: bold;
+    }
+    .no {
+      color: #d33;
+      font-weight: bold;
+    }
+    .badge {
+      background: var(--ac);
+      color: #fff;
+      border-radius: 16px;
+      padding: 2px 10px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 تعريف الشقوق الحمضية</h1>
+  <div class="c">
+    <div class="m">حسب شيت المعمل (إشراف أ.د. السيد الأشتوخي). الأنبوبة فيها ملح مجهول، اتبع الخطوات واكتشف الأنيون.</div>
+    <select id="mode"></select>
+    <button onclick="start()">ابدأ / مجهول جديد</button>
+  </div>
+
+  <div class="c row">
+    <div style="width:90px">
+      <div class="tube">
+        <div class="liq" id="liq"></div>
+        <div class="ppt" id="ppt"></div>
+      </div>
+    </div>
+    <div id="obs" style="flex:1;font-size:15px">اضغط على اختبار…</div>
+  </div>
+
+  <div class="c">
+    <h3>① على الملح الصلب</h3>
+    <div class="g" id="s1"></div>
+    <h3>اختبار الغاز المتصاعد</h3>
+    <div class="g" id="s1g"></div>
+  </div>
+
+  <div class="c">
+    <h3>② على محلول الملح</h3>
+    <div class="g" id="s2"></div>
+  </div>
+
+  <div class="c">
+    <b>سجل الملاحظات</b>
+    <div class="log" id="log"><span class="m">فاضي</span></div>
+  </div>
+
+  <div class="c">
+    <b>المجموعة:</b>
+    <select id="grp">
+      <option value="">اختر</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+    </select>
+    <div><b>الأنيون:</b></div>
+    <div class="g" id="an"></div>
+    <div id="res"></div>
+  </div>
+
+  <script>
+    // ---------- قاعدة بيانات الشقوق الحمضية ----------
+    const D = ['لا نتيجة مميزة (مش من خطوات الشيت لهذا الملح)'];
+    const NR = ['لا تفاعل'];
+    const W = '#f4f4f4';
+
+    // [نص, لون المحلول, لون الراسب, غاز]
+    const A = {
+      co3: {
+        n: 'Carbonate CO₃²⁻',
+        g: 'A',
+        gas: 'co2',
+        t: {
+          hcl: ['غاز عديم اللون والرائحة + فوران', , , 1],
+          mgc: ['راسب أبيض على البارد', , W],
+          mgh: ['راسب أبيض (ظهر من البارد)', , W]
+        }
+      },
+      hco3: {
+        n: 'Bicarbonate HCO₃⁻',
+        g: 'A',
+        gas: 'co2',
+        t: {
+          hcl: ['غاز عديم اللون والرائحة + فوران', , , 1],
+          mgc: ['لا راسب على البارد'],
+          mgh: ['راسب أبيض عند الغليان', , W]
+        }
+      },
+      so3: {
+        n: 'Sulfite SO₃²⁻',
+        g: 'A',
+        gas: 'so2',
+        t: {
+          hcl: ['غاز عديم اللون رائحته خانقة (SO₂)', , , 1],
+          fe: ['لون بني محمر', '#a3401f']
+        }
+      },
+      s2o3: {
+        n: 'Thiosulfate S₂O₃²⁻',
+        g: 'A',
+        gas: 'so2',
+        t: {
+          hcl: ['غاز عديم اللون رائحته خانقة (SO₂)', , , 1],
+          fe: ['لون بنفسجي', '#7a3fb5']
+        }
+      },
+      no2: {
+        n: 'Nitrite NO₂⁻',
+        g: 'A',
+        gas: 'no',
+        t: {
+          hcl: ['غاز عديم اللون يتبعه غاز بني (NO + NO₂)', , , 1],
+          ki: ['ظهور لون بني', '#8a5a22'],
+          starch: ['لون أزرق غامق', '#10205a']
+        }
+      },
+      cl: {
+        n: 'Chloride Cl⁻',
+        g: 'B',
+        gas: null,
+        t: {
+          hcl: NR,
+          h2so4: ['غاز عديم اللون رائحته نفّاذة (HCl)', , , 1],
+          pb: ['راسب أبيض يذوب بالتسخين ويرسب تاني بالتبريد', , W]
+        }
+      },
+      so4: {
+        n: 'Sulphate SO₄²⁻',
+        g: 'C',
+        gas: null,
+        t: {
+          hcl: NR,
+          h2so4: ['لا غاز'],
+          bacl: ['راسب أبيض', , W],
+          fe: ['لا راسب (لون أصفر باهت)', '#e9e3a8']
+        }
+      },
+      po4: {
+        n: 'Phosphate PO₄³⁻',
+        g: 'C',
+        gas: null,
+        t: {
+          hcl: NR,
+          h2so4: ['لا غاز'],
+          bacl: ['راسب أبيض', , W],
+          fe: ['راسب أصفر باهت أو أبيض', '#e9e3a8', '#eee9b8']
+        }
+      }
+    };
+
+    // قوائم الأزرار
+    const S1 = {
+      hcl: 'ملح + HCl مخفف',
+      h2so4: 'ملح + H₂SO₄ مركز + تسخين'
+    };
+    const S1G = {
+      lime: 'ماء الجير',
+      dich: 'K₂Cr₂O₇ محمّض',
+      nh4: 'NH₄OH (أبخرة بيضاء؟)'
+    };
+    const S2 = {
+      bacl: 'BaCl₂',
+      mgc: 'MgSO₄ (على البارد)',
+      mgh: 'MgSO₄ (بالغليان)',
+      fe: 'FeCl₃',
+      ki: 'KI + حمض خليك مخفف',
+      starch: 'نشا (بعد KI)',
+      pb: 'خلات الرصاص'
+    };
+
+    // ---------- الحالة ----------
+    let cur = null;        // المفتاح الحالي للأنيون
+    let gas = null;       // أي حمض أطلق غازاً (hcl أو h2so4)
+    let did = new Set();  // الاختبارات التي تمت
+
+    const $ = id => document.getElementById(id);
+
+    // بناء الأزرار
+    const btns = (obj, fn) =>
+      Object.keys(obj).map(k =>
+        `<button onclick="${fn}('${k}')">${obj[k]}</button>`
+      ).join('');
+
+    // تهيئة القوائم
+    $('mode').innerHTML = '<option value="rand">مجهول عشوائي</option>' +
+      Object.keys(A).map(k => `<option value="${k}">${A[k].n}</option>`).join('');
+
+    $('s1').innerHTML = btns(S1, 'add');
+    $('s1g').innerHTML = btns(S1G, 'gt');
+    $('s2').innerHTML = btns(S2, 'add');
+    $('an').innerHTML = Object.keys(A).map(k =>
+      `<button onclick="ans('${k}')">${A[k].n}</button>`
+    ).join('');
+
+    // ---------- دوال العرض ----------
+    function show(name, r) {
+      // r = [نص, لون المحلول, لون الراسب, وجود غاز]
+      const obsText = r[0] + (r[3] ? ' 💨' : '');
+      $('obs').textContent = obsText;
+
+      // تحديث لون المحلول
+      if (r[1]) {
+        $('liq').style.background = r[1];
+      } else {
+        $('liq').style.background = 'rgba(120,180,255,.3)';
+      }
+
+      // تحديث الراسب
+      if (r[2]) {
+        $('ppt').style.background = r[2];
+        $('ppt').style.height = '18%';
+      } else {
+        $('ppt').style.background = 'transparent';
+        $('ppt').style.height = '0';
+      }
+
+      // إضافة إلى السجل
+      const logDiv = $('log');
+      if (logDiv.querySelector('.m')) logDiv.innerHTML = '';
+      const entry = document.createElement('div');
+      entry.innerHTML = `<b>${name}:</b> ${r[0]}`;
+      logDiv.appendChild(entry);
+    }
+
+    // بدء تجربة جديدة
+    function start() {
+      const mode = $('mode').value;
+      const keys = Object.keys(A);
+      cur = mode === 'rand' ? keys[Math.floor(Math.random() * keys.length)] : mode;
+
+      gas = null;
+      did = new Set();
+
+      $('log').innerHTML = '<span class="m">فاضي</span>';
+      $('res').innerHTML = '';
+      $('grp').value = '';
+      $('obs').textContent = 'اضغط على اختبار…';
+      $('liq').style.background = '';
+      $('ppt').style.height = '0';
+      $('ppt').style.background = 'transparent';
+    }
+
+    // إضافة اختبار (على الصلب أو المحلول)
+    function add(k) {
+      if (!cur) start();
+
+      // منع إضافة النشا قبل KI
+      if (k === 'starch' && !did.has('ki')) {
+        $('obs').textContent = 'أضف KI + حمض الخليك الأول.';
+        return;
+      }
+
+      let r = A[cur].t[k] || D;
+
+      // تسجيل الغاز المتصاعد
+      if (k === 'hcl' || k === 'h2so4') {
+        if (r[3]) {
+          gas = k;
+        }
+      }
+
+      did.add(k);
+      show(S1[k] || S2[k], r);
+    }
+
+    // اختبار الغاز المتصاعد
+    function gt(k) {
+      if (!cur) start();
+
+      const a = A[cur];
+      let r;
+
+      if (!gas) {
+        r = ['مفيش غاز متصاعد تختبره — اعمل خطوة الملح الصلب الأول'];
+        $('obs').textContent = r[0];
+        return;
+      }
+
+      // نوع الغاز (لو h2so4 مع كلوريد يطلع HCl)
+      const gtype = gas === 'h2so4' ? 'hcl' : a.gas;
+
+      if (k === 'lime') {
+        r = gtype === 'co2' ? ['ماء الجير بيتعكّر (لبني) ← CO₂', '#e8e8e8'] : D;
+      } else if (k === 'dich') {
+        if (gtype === 'so2') {
+          r = (cur === 'so3')
+            ? ['الورقة تتحول لأخضر غامق', '#1d5a2e']
+            : ['الورقة تتحول لأخضر مصفر', '#8aa63a'];
+        } else {
+          r = D;
+        }
+      } else if (k === 'nh4') {
+        r = gtype === 'hcl' ? ['أبخرة بيضاء (NH₄Cl)', '#f2f2f2'] : D;
+      }
+
+      show(S1G[k], r);
+    }
+
+    // الإجابة النهائية
+    function ans(k) {
+      if (!cur) {
+        $('res').innerHTML = '<span class="m">ابدأ مجهول الأول.</span>';
+        return;
+      }
+
+      const g = $('grp').value;
+      if (!g) {
+        $('res').innerHTML = '<span class="m">اختر المجموعة الأول.</span>';
+        return;
+      }
+
+      const gOk = (g === A[cur].g);
+      if (k === cur && gOk) {
+        $('res').innerHTML = `<span class="ok">✔ صح! ${A[cur].n} (مجموعة ${A[cur].g})</span>`;
+      } else {
+        const msg = gOk ? 'المجموعة صح بس الأنيون غلط' : 'المجموعة غلط';
+        $('res').innerHTML = `<span class="no">✘ ${msg}، راجع الشيت.</span>`;
+      }
+    }
+
+    // ---------- بدء تلقائي ----------
+    window.onload = () => {
+      // بدء مجهول عشوائي لتجربة سريعة
+      start();
+    };
+  </script>
+</body>
+</html>
