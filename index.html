@@ -1,452 +1,279 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>معمل الشقوق الحمضية · تعريف الأنيونات</title>
-  <style>
-    :root {
-      --bg: #f6f7f9;
-      --card: #fff;
-      --tx: #1b1f24;
-      --mut: #667;
-      --ac: #1a6fd4;
-      --bd: #d9dde3;
-      box-sizing: border-box;
-      padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-    }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #15181c;
-        --card: #1f242a;
-        --tx: #eceff3;
-        --mut: #9aa3ad;
-        --ac: #5aa2ff;
-        --bd: #343b44;
-      }
-    }
-    :root[data-theme="dark"] {
-      --bg: #15181c;
-      --card: #1f242a;
-      --tx: #eceff3;
-      --mut: #9aa3ad;
-      --ac: #5aa2ff;
-      --bd: #343b44;
-    }
-    html {
-      scroll-padding-top: env(safe-area-inset-top, 0px);
-    }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--tx);
-      font-family: system-ui, "Segoe UI", Tahoma, sans-serif;
-      padding: 12px;
-      max-width: 640px;
-      margin-inline: auto;
-    }
-    h1 {
-      font-size: 20px;
-      margin: 6px 0;
-    }
-    .c {
-      background: var(--card);
-      border: 1px solid var(--bd);
-      border-radius: 12px;
-      padding: 12px;
-      margin: 10px 0;
-    }
-    button, select {
-      font: inherit;
-      color: var(--tx);
-      background: var(--card);
-      border: 1px solid var(--bd);
-      border-radius: 8px;
-      padding: 8px 10px;
-      margin: 3px;
-      cursor: pointer;
-    }
-    button:active { background: var(--bd); }
-    .g {
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .tube {
-      width: 46px;
-      height: 110px;
-      border: 3px solid var(--mut);
-      border-top: none;
-      border-radius: 0 0 24px 24px;
-      margin: 6px auto;
-      position: relative;
-      overflow: hidden;
-      background: #fcfcfc;
-    }
-    .liq {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 70%;
-      transition: .4s;
-      background: rgba(120, 180, 255, .3);
-    }
-    .ppt {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 0;
-      transition: .4s;
-      background: transparent;
-    }
-    .row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .log div {
-      padding: 6px 0;
-      border-bottom: 1px solid var(--bd);
-      font-size: 14px;
-    }
-    .m {
-      color: var(--mut);
-      font-size: 13px;
-    }
-    h3 {
-      margin: 4px 0;
-      font-size: 15px;
-    }
-    .ok {
-      color: #1a8f3c;
-      font-weight: bold;
-    }
-    .no {
-      color: #d33;
-      font-weight: bold;
-    }
-    .badge {
-      background: var(--ac);
-      color: #fff;
-      border-radius: 16px;
-      padding: 2px 10px;
-      font-size: 12px;
-    }
-  </style>
-</head>
-<body>
-  <h1>🧪 تعريف الشقوق الحمضية</h1>
-  <div class="c">
-    <div class="m">حسب شيت المعمل (إشراف أ.د. السيد الأشطوخي). الأنبوبة فيها ملح مجهول، اتبع الخطوات واكتشف الأنيون.</div>
-    <select id="mode"></select>
-    <button onclick="start()">ابدأ / مجهول جديد</button>
-  </div>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>معمل الشقوق الحمضية</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#667;--ac:#1a6fd4;--bd:#d9dde3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181c;--card:#1f242a;--tx:#eceff3;--mut:#9aa3ad;--ac:#5aa2ff;--bd:#343b44}}
+:root[data-theme="dark"]{--bg:#15181c;--card:#1f242a;--tx:#eceff3;--mut:#9aa3ad;--ac:#5aa2ff;--bd:#343b44}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,"Segoe UI",Tahoma,sans-serif;padding:12px;max-width:640px;margin-inline:auto}
+h1{font-size:20px;margin:6px 0}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:10px 0}
+button,select{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;margin:3px;cursor:pointer}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:active:not(:disabled){background:var(--bd)}
+.g{display:flex;flex-wrap:wrap}
+.tube{width:46px;height:110px;border:3px solid var(--mut);border-top:none;border-radius:0 0 24px 24px;margin:6px auto;position:relative;overflow:hidden;background:#fcfcfc}
+.liq{position:absolute;bottom:0;width:100%;height:70%;transition:.4s;background:rgba(120,180,255,.3)}
+.ppt{position:absolute;bottom:0;width:100%;height:0;transition:.4s;background:transparent}
+.row{display:flex;gap:12px;align-items:center}
+.log div{padding:6px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.m{color:var(--mut);font-size:13px}
+h3{margin:4px 0;font-size:15px}
+.ok{color:#1a8f3c;font-weight:bold}.no{color:#d33;font-weight:bold}
+.step{background:#fff8e6;border:1px solid #f0c96a;border-radius:8px;padding:8px;margin:8px 0;font-size:13px}
+:root[data-theme="dark"] .step{background:#2a2416;border-color:#5a4a1a}
+.locked{opacity:.35;pointer-events:none}
+</style></head><body>
 
-  <div class="c row">
-    <div style="width:90px">
-      <div class="tube">
-        <div class="liq" id="liq"></div>
-        <div class="ppt" id="ppt"></div>
-      </div>
-    </div>
-    <div id="obs" style="flex:1;font-size:15px">اضغط على اختبار…</div>
-  </div>
+<h1>🧪 معمل الشقوق الحمضية</h1>
 
-  <div class="c">
-    <h3>① على الملح الصلب</h3>
-    <div class="g" id="s1"></div>
-    <h3>اختبار الغاز المتصاعد</h3>
-    <div class="g" id="s1g"></div>
-  </div>
+<div class="c">
+<div class="m">حسب شيت المعمل (إشراف أ.د. السيد الأشطوخي). الأنبوبة فيها ملح مجهول، اتبع الخطوات بالترتيب لاكتشاف الأنيون.</div>
+<select id="mode"></select><button onclick="start()">ابدأ / مجهول جديد</button>
+</div>
 
-  <div class="c">
-    <h3>② على محلول الملح</h3>
-    <div class="g" id="s2"></div>
-  </div>
+<div class="c row">
+<div style="width:90px"><div class="tube"><div class="liq" id="liq"></div><div class="ppt" id="ppt"></div></div></div>
+<div id="obs" style="flex:1;font-size:15px">اضغط على اختبار…</div>
+</div>
 
-  <div class="c">
-    <b>سجل الملاحظات</b>
-    <div class="log" id="log"><span class="m">فاضي</span></div>
-  </div>
+<!-- المرحلة 1: HCl إجباري -->
+<div class="c" id="stage1">
+<h3>🔒 المرحلة 1 (إجبارية): ملح + HCl مخفف</h3>
+<div class="g"><button id="btn_hcl" onclick="add('hcl')">أضف HCl مخفف</button></div>
+<div id="msg1" class="step" style="display:none"></div>
+</div>
 
-  <div class="c">
-    <b>المجموعة:</b>
-    <select id="grp">
-      <option value="">اختر</option>
-      <option value="A">A</option>
-      <option value="B">B</option>
-      <option value="C">C</option>
-    </select>
-    <div><b>الأنيون:</b></div>
-    <div class="g" id="an"></div>
-    <div id="res"></div>
-  </div>
+<!-- المرحلة 2: اختبار الغاز (لو فيه فوران) -->
+<div class="c locked" id="stageGas">
+<h3>💨 اختبار الغاز المتصاعد</h3>
+<div class="m">اختبر الغاز الناتج لتعرف أنيون جروب A:</div>
+<div class="g" id="s1g"></div>
+</div>
 
-  <script>
-    // ---------- قاعدة بيانات الشقوق الحمضية ----------
-    const D = ['لا نتيجة مميزة (مش من خطوات الشيت لهذا الملح)'];
-    const NR = ['لا تفاعل'];
-    const W = '#f4f4f4';
+<!-- المرحلة 3: H2SO4 إجباري لو مفيش فوران -->
+<div class="c locked" id="stage2">
+<h3>🔒 المرحلة 2 (إجبارية للانتقال لجروب B): ملح + H₂SO₄ مركز + تسخين</h3>
+<div class="g"><button onclick="add('h2so4')">أضف H₂SO₄ مركز + سخّن</button></div>
+</div>
 
-    // [نص, لون المحلول, لون الراسب, غاز]
-    const A = {
-      co3: {
-        n: 'Carbonate CO₃²⁻',
-        g: 'A',
-        gas: 'co2',
-        t: {
-          hcl: ['غاز عديم اللون والرائحة + فوران', , , 1],
-          mgc: ['راسب أبيض على البارد', , W],
-          mgh: ['راسب أبيض (ظهر من البارد)', , W]
-        }
-      },
-      hco3: {
-        n: 'Bicarbonate HCO₃⁻',
-        g: 'A',
-        gas: 'co2',
-        t: {
-          hcl: ['غاز عديم اللون والرائحة + فوران', , , 1],
-          mgc: ['لا راسب على البارد'],
-          mgh: ['راسب أبيض عند الغليان', , W]
-        }
-      },
-      so3: {
-        n: 'Sulfite SO₃²⁻',
-        g: 'A',
-        gas: 'so2',
-        t: {
-          hcl: ['غاز عديم اللون رائحته خانقة (SO₂)', , , 1],
-          fe: ['لون بني محمر', '#a3401f']
-        }
-      },
-      s2o3: {
-        n: 'Thiosulfate S₂O₃²⁻',
-        g: 'A',
-        gas: 'so2',
-        t: {
-          hcl: ['غاز عديم اللون رائحته خانقة (SO₂)', , , 1],
-          fe: ['لون بنفسجي', '#7a3fb5']
-        }
-      },
-      no2: {
-        n: 'Nitrite NO₂⁻',
-        g: 'A',
-        gas: 'no',
-        t: {
-          hcl: ['غاز عديم اللون يتبعه غاز بني (NO + NO₂)', , , 1],
-          ki: ['ظهور لون بني', '#8a5a22'],
-          starch: ['لون أزرق غامق', '#10205a']
-        }
-      },
-      cl: {
-        n: 'Chloride Cl⁻',
-        g: 'B',
-        gas: null,
-        t: {
-          hcl: NR,
-          h2so4: ['غاز عديم اللون رائحته نفّاذة (HCl)', , , 1],
-          pb: ['راسب أبيض يذوب بالتسخين ويرسب تاني بالتبريد', , W]
-        }
-      },
-      so4: {
-        n: 'Sulphate SO₄²⁻',
-        g: 'C',
-        gas: null,
-        t: {
-          hcl: NR,
-          h2so4: ['لا غاز'],
-          bacl: ['راسب أبيض', , W],
-          fe: ['لا راسب (لون أصفر باهت)', '#e9e3a8']
-        }
-      },
-      po4: {
-        n: 'Phosphate PO₄³⁻',
-        g: 'C',
-        gas: null,
-        t: {
-          hcl: NR,
-          h2so4: ['لا غاز'],
-          bacl: ['راسب أبيض', , W],
-          fe: ['راسب أصفر باهت أو أبيض', '#e9e3a8', '#eee9b8']
-        }
-      }
-    };
+<!-- اختبار K2Cr2O7 -->
+<div class="c locked" id="stageDich">
+<h3>🧪 اختبار K₂Cr₂O₇ المحمّض (بوابة الانتقال)</h3>
+<div class="m">اغمس ورقة مبللة بـ K₂Cr₂O₇ في بخار الغاز المتصاعد:</div>
+<div class="g"><button onclick="gt('dich')">اختبر بـ K₂Cr₂O₇</button></div>
+</div>
 
-    // قوائم الأزرار
-    const S1 = {
-      hcl: 'ملح + HCl مخفف',
-      h2so4: 'ملح + H₂SO₄ مركز + تسخين'
-    };
-    const S1G = {
-      lime: 'ماء الجير',
-      dich: 'K₂Cr₂O₇ محمّض',
-      nh4: 'NH₄OH (أبخرة بيضاء؟)'
-    };
-    const S2 = {
-      bacl: 'BaCl₂',
-      mgc: 'MgSO₄ (على البارد)',
-      mgh: 'MgSO₄ (بالغليان)',
-      fe: 'FeCl₃',
-      ki: 'KI + حمض خليك مخفف',
-      starch: 'نشا (بعد KI)',
-      pb: 'خلات الرصاص'
-    };
+<!-- المرحلة 4: اختبارات المحلول (جروب B و C) -->
+<div class="c locked" id="stage3">
+<h3>🔓 المرحلة 3: اختبارات على محلول الملح (جروب B و C)</h3>
+<div class="m">جروب B (Cl⁻): يتفاعل مع خلات الرصاص.</div>
+<div class="m">جروب C (SO₄²⁻ / PO₄³⁻): يتفاعل مع BaCl₂ و FeCl₃.</div>
+<div class="g" id="s2"></div>
+</div>
 
-    // ---------- الحالة ----------
-    let cur = null;        // المفتاح الحالي للأنيون
-    let gas = null;       // أي حمض أطلق غازاً (hcl أو h2so4)
-    let did = new Set();  // الاختبارات التي تمت
+<div class="c"><b>سجل الملاحظات</b><div class="log" id="log"><span class="m">فاضي</span></div></div>
 
-    const $ = id => document.getElementById(id);
+<div class="c" id="answerBox" style="display:none">
+<b>المرحلة النهائية: حدّد المجموعة والأنيون</b><br>
+<div style="margin-top:8px"><b>المجموعة:</b>
+<select id="grp"><option value="">اختر</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></div>
+<div style="margin-top:8px"><b>الأنيون:</b></div>
+<div class="g" id="an"></div>
+<div id="res" style="margin-top:8px"></div>
+</div>
 
-    // بناء الأزرار
-    const btns = (obj, fn) =>
-      Object.keys(obj).map(k =>
-        `<button onclick="${fn}('${k}')">${obj[k]}</button>`
-      ).join('');
+<script>
+const D=['لا نتيجة مميزة (مش من خطوات الشيت لهذا الملح)'];
+const NR=['لا تفاعل'];
+const W='#f4f4f4';
+const A={
+co3:{n:'Carbonate CO₃²⁻',g:'A',gas:'co2',t:{hcl:['غاز عديم اللون والرائحة + فوران',,,1],mgc:['راسب أبيض على البارد',,W],mgh:['راسب أبيض (ظهر من البارد)',,W]}},
+hco3:{n:'Bicarbonate HCO₃⁻',g:'A',gas:'co2',t:{hcl:['غاز عديم اللون والرائحة + فوران',,,1],mgc:['لا راسب على البارد'],mgh:['راسب أبيض عند الغليان',,W]}},
+so3:{n:'Sulfite SO₃²⁻',g:'A',gas:'so2',t:{hcl:['غاز عديم اللون رائحته خانقة (SO₂)',,,1],fe:['لون بني محمر','#a3401f']}},
+s2o3:{n:'Thiosulfate S₂O₃²⁻',g:'A',gas:'so2',t:{hcl:['غاز عديم اللون رائحته خانقة (SO₂)',,,1],fe:['لون بنفسجي','#7a3fb5']}},
+no2:{n:'Nitrite NO₂⁻',g:'A',gas:'no',t:{hcl:['غاز عديم اللون يتبعه غاز بني (NO + NO₂)',,,1],ki:['ظهور لون بني','#8a5a22'],starch:['لون أزرق غامق','#10205a']}},
+cl:{n:'Chloride Cl⁻',g:'B',gas:null,t:{hcl:NR,h2so4:['غاز عديم اللون رائحته نفّاذة (HCl)',,,1],pb:['راسب أبيض يذوب بالتسخين ويرسب تاني بالتبريد',,W]}},
+so4:{n:'Sulphate SO₄²⁻',g:'C',gas:null,t:{hcl:NR,h2so4:['لا غاز'],bacl:['راسب أبيض',,W],fe:['لا راسب (لون أصفر باهت)','#e9e3a8']}},
+po4:{n:'Phosphate PO₄³⁻',g:'C',gas:null,t:{hcl:NR,h2so4:['لا غاز'],bacl:['راسب أبيض',,W],fe:['راسب أصفر باهت أو أبيض','#e9e3a8','#eee9b8']}}
+};
 
-    // تهيئة القوائم
-    $('mode').innerHTML = '<option value="rand">مجهول عشوائي</option>' +
-      Object.keys(A).map(k => `<option value="${k}">${A[k].n}</option>`).join('');
+// تسميات الأزرار
+const S1={hcl:'ملح + HCl مخفف',h2so4:'ملح + H₂SO₄ مركز + تسخين'};
+const S1G={lime:'ماء الجير',dich:'K₂Cr₂O₇ محمّض',nh4:'NH₄OH (أبخرة بيضاء؟)'};
+const S2={bacl:'BaCl₂',mgc:'MgSO₄ (على البارد)',mgh:'MgSO₄ (بالغليان)',fe:'FeCl₃',ki:'KI + حمض خليك مخفف',starch:'نشا (بعد KI)',pb:'خلات الرصاص'};
 
-    $('s1').innerHTML = btns(S1, 'add');
-    $('s1g').innerHTML = btns(S1G, 'gt');
-    $('s2').innerHTML = btns(S2, 'add');
-    $('an').innerHTML = Object.keys(A).map(k =>
-      `<button onclick="ans('${k}')">${A[k].n}</button>`
-    ).join('');
+let cur=null,gas=null,did=new Set();
+let stage=1; // 1=HCl, 2=Gas test or H2SO4, 3=Dich test, 4=Solution tests
+let sawBubbles=false;    // هل حصل فوران في HCl؟
+let dichGreen=false;     // هل K2Cr2O7 اتحول أخضر؟
+let fromGroupA=false;    // خرج من المرحلة 1 كـ A؟
 
-    // ---------- دوال العرض ----------
-    function show(name, r) {
-      // r = [نص, لون المحلول, لون الراسب, وجود غاز]
-      const obsText = r[0] + (r[3] ? ' 💨' : '');
-      $('obs').textContent = obsText;
+const $=id=>document.getElementById(id);
+const btns=(o,f)=>Object.keys(o).map(k=>`<button onclick="${f}('${k}')">${o[k]}</button>`).join('');
 
-      // تحديث لون المحلول
-      if (r[1]) {
-        $('liq').style.background = r[1];
-      } else {
-        $('liq').style.background = 'rgba(120,180,255,.3)';
-      }
+$('mode').innerHTML='<option value="rand">مجهول عشوائي</option>'+Object.keys(A).map(k=>`<option value="${k}">${A[k].n}</option>`).join('');
+$('s1g').innerHTML=btns(S1G,'gt');
+$('s2').innerHTML=btns(S2,'add');
+$('an').innerHTML=Object.keys(A).map(k=>`<button onclick="ans('${k}')">${A[k].n}</button>`).join('');
 
-      // تحديث الراسب
-      if (r[2]) {
-        $('ppt').style.background = r[2];
-        $('ppt').style.height = '18%';
-      } else {
-        $('ppt').style.background = 'transparent';
-        $('ppt').style.height = '0';
-      }
+function unlock(id){$(id).classList.remove('locked')}
+function lock(id){$(id).classList.add('locked')}
+function showStep(id,html){const el=$(id);el.style.display='block';el.innerHTML=html}
 
-      // إضافة إلى السجل
-      const logDiv = $('log');
-      if (logDiv.querySelector('.m')) logDiv.innerHTML = '';
-      const entry = document.createElement('div');
-      entry.innerHTML = `<b>${name}:</b> ${r[0]}`;
-      logDiv.appendChild(entry);
-    }
+function show(name,r){
+ $('obs').textContent=r[0]+(r[3]?' 💨':'');
+ if(r[1])$('liq').style.background=r[1];else $('liq').style.background='rgba(120,180,255,.3)';
+ if(r[2]){$('ppt').style.background=r[2];$('ppt').style.height='18%';}
+ else{$('ppt').style.background='transparent';$('ppt').style.height='0';}
+ const l=$('log');if(l.querySelector('.m'))l.innerHTML='';
+ const d=document.createElement('div');d.innerHTML='<b>'+name+':</b> '+r[0];l.appendChild(d);
+}
 
-    // بدء تجربة جديدة
-    function start() {
-      const mode = $('mode').value;
-      const keys = Object.keys(A);
-      cur = mode === 'rand' ? keys[Math.floor(Math.random() * keys.length)] : mode;
+function start(){
+ const m=$('mode').value,ks=Object.keys(A);
+ cur=m==='rand'?ks[Math.floor(Math.random()*ks.length)]:m;
+ gas=null;did=new Set();stage=1;sawBubbles=false;dichGreen=false;fromGroupA=false;
+ $('log').innerHTML='<span class="m">فاضي</span>';$('res').innerHTML='';$('grp').value='';
+ $('obs').textContent='اضغط على اختبار…';
+ $('liq').style.background='';$('ppt').style.height='0';$('ppt').style.background='transparent';
+ // إعادة التهيئة
+ $('btn_hcl').disabled=false;
+ $('msg1').style.display='none';
+ unlock('stage1');
+ lock('stageGas');lock('stage2');lock('stageDich');lock('stage3');
+ $('answerBox').style.display='none';
+}
 
-      gas = null;
-      did = new Set();
+function add(k){
+ if(!cur)start();
+ if(k==='starch'&&!did.has('ki')){$('obs').textContent='أضف KI + حمض الخليك الأول.';return}
+ if(k==='h2so4'&&stage===1){$('obs').textContent='لازم تعمل تفاعل HCl الأول.';return}
 
-      $('log').innerHTML = '<span class="m">فاضي</span>';
-      $('res').innerHTML = '';
-      $('grp').value = '';
-      $('obs').textContent = 'اضغط على اختبار…';
-      $('liq').style.background = '';
-      $('ppt').style.height = '0';
-      $('ppt').style.background = 'transparent';
-    }
+ // منع استخدام H2SO4 قبل HCl
+ let r=A[cur].t[k]||D;
 
-    // إضافة اختبار (على الصلب أو المحلول)
-    function add(k) {
-      if (!cur) start();
+ // تسجيل الغاز المتصاعد
+ if(k==='hcl'||k==='h2so4'){if(r[3])gas=k;}
 
-      // منع إضافة النشا قبل KI
-      if (k === 'starch' && !did.has('ki')) {
-        $('obs').textContent = 'أضف KI + حمض الخليك الأول.';
-        return;
-      }
+ // === منطق HCl (المرحلة 1) ===
+ if(k==='hcl'){
+   did.add('hcl');
+   show(S1.hcl,r);
+   $('btn_hcl').disabled=true;
 
-      let r = A[cur].t[k] || D;
+   if(r[3]){
+     // فيه فوران → جروب A
+     sawBubbles=true;
+     fromGroupA=true;
+     showStep('msg1','✅ <b>يوجد فوران/غاز متصاعد</b> → <b>الجروب A</b><br>اختبر الغاز المتصاعد في الأسفل.');
+     unlock('stageGas');
+     $('answerBox').style.display='block';
+     // جروب A مش محتاج مرحلته 2 (H2SO4)
+     $('grp').value='A';
+   } else {
+     // مفيش فوران → نروح للمرحلة 2 (H2SO4)
+     sawBubbles=false;
+     showStep('msg1','❌ <b>لا فوران</b> → مش جروب A<br>اضغط على زر H₂SO₄ المركز في الأسفل للانتقال.');
+     unlock('stage2');
+   }
+   return;
+ }
 
-      // تسجيل الغاز المتصاعد
-      if (k === 'hcl' || k === 'h2so4') {
-        if (r[3]) {
-          gas = k;
-        }
-      }
+ // === منطق H2SO4 (المرحلة 2) ===
+ if(k==='h2so4'){
+   did.add('h2so4');
+   show(S1.h2so4,r);
+   lock('stage2');
+   unlock('stageDich');
+   if(r[3]){
+     showStep('msg1','💨 <b>يوجد غاز متصاعد</b> من H₂SO₄ → اختبر بـ K₂Cr₂O₇ للتفريق بين جروب A و B.');
+   } else {
+     showStep('msg1','❌ لا غاز من H₂SO₄ → على الأغلب من جروب C. (لكن اختبار K₂Cr₂O₇ هيعطينا تأكيد)');
+   }
+   return;
+ }
 
-      did.add(k);
-      show(S1[k] || S2[k], r);
-    }
+ // === اختبارات المحلول (المرحلة 4) ===
+ if(['bacl','mgc','mgh','fe','ki','starch','pb'].includes(k)){
+   if(stage<4){$('obs').textContent='لازم تخلّص المرحلة 1 واختبار K₂Cr₂O₇ الأول.';return}
+   did.add(k);
+   show(S2[k],r);
+   if(k==='bacl'||k==='pb'){
+     $('answerBox').style.display='block';
+   }
+   return;
+ }
+}
 
-    // اختبار الغاز المتصاعد
-    function gt(k) {
-      if (!cur) start();
+function gt(k){
+ if(!cur)start();
+ const a=A[cur];let r;
 
-      const a = A[cur];
-      let r;
+ // === اختبار K2Cr2O7 ===
+ if(k==='dich'){
+   if(stage<3){$('obs').textContent='لازم تعمل اختبار HCl ثم H₂SO₄ الأول.';return}
+   // نحدد نوع الغاز
+   const gtype=(gas==='h2so4')?'hcl':a.gas;
 
-      if (!gas) {
-        r = ['مفيش غاز متصاعد تختبره — اعمل خطوة الملح الصلب الأول'];
-        $('obs').textContent = r[0];
-        return;
-      }
+   if(gtype==='so2'){
+     // سلفيت/ثيوسلفيت → أخضر
+     r=(cur==='so3')?['الورقة تتحول لأخضر غامق ✅','#1d5a2e']:['الورقة تتحول لأخضر مصفر ✅','#8aa63a'];
+     dichGreen=true;
+     fromGroupA=true;
+     show(S1G.dich,r);
+     showStep('msg1','🟢 <b>K₂Cr₂O₇ تحول للأخضر → الجروب A مؤكد</b> (سلفيت/ثيوسلفيت)<br>اختبر الغاز بماء الجير للتأكيد، واختبر محلول الملح في المرحلة 3.');
+     unlock('stage3');
+     $('answerBox').style.display='block';
+     $('grp').value='A';
+   } else if(gtype==='hcl'){
+     // كلوريد → H2SO4 يطلع HCl، مش هيتفاعل مع K2Cr2O7
+     r=['لا يتغير لون K₂Cr₂O₇ (الغاز HCl)','#c97b1a'];
+     dichGreen=false;
+     show(S1G.dich,r);
+     showStep('msg1','🟠 <b>K₂Cr₂O₇ لم يتحول للأخضر → الجروب B</b> (الغاز HCl)<br>اختبر محلول الملح بخلات الرصاص.');
+     unlock('stage3');
+     $('answerBox').style.display='block';
+     $('grp').value='B';
+   } else {
+     // مفيش غاز (سلفات/فوسفات) → جروب C
+     r=['لا يتغير لون K₂Cr₂O₇ (لا يوجد غاز)','#c97b1a'];
+     dichGreen=false;
+     show(S1G.dich,r);
+     showStep('msg1','🔵 <b>لا يوجد غاز → الجروب C محتمل</b><br>اختبر محلول الملح بـ BaCl₂ للتأكيد.');
+     unlock('stage3');
+     $('answerBox').style.display='block';
+     $('grp').value='C';
+   }
+   stage=4;
+   return;
+ }
 
-      // نوع الغاز (لو h2so4 مع كلوريد يطلع HCl)
-      const gtype = gas === 'h2so4' ? 'hcl' : a.gas;
+ // === اختبارات الغاز الأخرى ===
+ if(!gas){$('obs').textContent='مفيش غاز متصاعد تختبره — اعمل خطوة الملح الصلب الأول.';return}
+ const gtype=gas==='h2so4'?'hcl':a.gas;
 
-      if (k === 'lime') {
-        r = gtype === 'co2' ? ['ماء الجير بيتعكّر (لبني) ← CO₂', '#e8e8e8'] : D;
-      } else if (k === 'dich') {
-        if (gtype === 'so2') {
-          r = (cur === 'so3')
-            ? ['الورقة تتحول لأخضر غامق', '#1d5a2e']
-            : ['الورقة تتحول لأخضر مصفر', '#8aa63a'];
-        } else {
-          r = D;
-        }
-      } else if (k === 'nh4') {
-        r = gtype === 'hcl' ? ['أبخرة بيضاء (NH₄Cl)', '#f2f2f2'] : D;
-      }
+ if(k==='lime'){r=gtype==='co2'?['ماء الجير بيتعكّر (لبني) ← CO₂','#e8e8e8']:D}
+ else if(k==='nh4'){r=gtype==='hcl'?['أبخرة بيضاء (NH₄Cl)','#f2f2f2']:D}
 
-      show(S1G[k], r);
-    }
+ show(S1G[k],r);
+}
 
-    // الإجابة النهائية
-    function ans(k) {
-      if (!cur) {
-        $('res').innerHTML = '<span class="m">ابدأ مجهول الأول.</span>';
-        return;
-      }
+function ans(k){
+ if(!cur){$('res').innerHTML='<span class="m">ابدأ مجهول الأول.</span>';return}
+ const g=$('grp').value;
+ if(!g){$('res').innerHTML='<span class="m">اختر المجموعة الأول.</span>';return}
 
-      const g = $('grp').value;
-      if (!g) {
-        $('res').innerHTML = '<span class="m">اختر المجموعة الأول.</span>';
-        return;
-      }
+ // تحقق من منطق المجموعة
+ if(g==='A'&&!fromGroupA){$('res').innerHTML='<span class="no">✘ الجروب A لازم يكون فيه فوران/غاز في المرحلة 1 أو لون أخضر مع K₂Cr₂O₇</span>';return}
+ if(g==='B'&&!(gas==='h2so4'&&!dichGreen)){$('res').innerHTML='<span class="no">✘ الجروب B لازم يطلع غاز HCl مع H₂SO₄ ولا يتحول K₂Cr₂O₇ للأخضر</span>';return}
 
-      const gOk = (g === A[cur].g);
-      if (k === cur && gOk) {
-        $('res').innerHTML = `<span class="ok">✔ صح! ${A[cur].n} (مجموعة ${A[cur].g})</span>`;
-      } else {
-        const msg = gOk ? 'المجموعة صح بس الأنيون غلط' : 'المجموعة غلط';
-        $('res').innerHTML = `<span class="no">✘ ${msg}، راجع الشيت.</span>`;
-      }
-    }
+ const gOk=g===A[cur].g;
+ $('res').innerHTML=(k===cur&&gOk)?'<span class="ok">✔ صح! '+A[cur].n+' (مجموعة '+A[cur].g+')</span>':'<span class="no">✘ '+(gOk?'المجموعة صح بس الأنيون غلط':'المجموعة غلط')+'، راجع الشيت.</span>';
+}
 
-    // ---------- بدء تلقائي ----------
-    window.onload = () => {
-      // بدء مجهول عشوائي لتجربة سريعة
-      start();
-    };
-  </script>
-</body>
-</html>
+// بدء تلقائي
+window.onload=()=>start();
+</script></body></html>
