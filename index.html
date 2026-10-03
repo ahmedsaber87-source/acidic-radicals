@@ -100,6 +100,7 @@ body{
   min-height:100vh;
 }
 
+/* 🌌 الخلفية */
 .cosmic-bg{
   position:fixed;
   inset:0;
@@ -158,8 +159,8 @@ body{
   100%{transform:translateY(-10vh) scale(1);opacity:0}
 }
 
-/* 🔒 شاشة القفل */
-#lockScreen{
+/* 🔐 شاشة تسجيل الدخول */
+#authScreen{
   position:fixed;
   inset:0;
   z-index:9999;
@@ -170,24 +171,24 @@ body{
   background:var(--bg);
   transition:opacity .4s ease, visibility .4s ease;
 }
-#lockScreen.hidden{
+#authScreen.hidden{
   opacity:0;
   visibility:hidden;
   pointer-events:none;
 }
-.lock-card{
+.auth-card{
   background:var(--card);
   border:1px solid var(--bd);
   border-radius:20px;
-  padding:32px 24px;
-  max-width:400px;
+  padding:36px 28px;
+  max-width:420px;
   width:100%;
   box-shadow:var(--shadow-lg);
   text-align:center;
   position:relative;
   overflow:hidden;
 }
-.lock-card::before{
+.auth-card::before{
   content:'';
   position:absolute;
   top:0;left:0;right:0;
@@ -201,89 +202,110 @@ body{
   0%{background-position:-100% 0}
   100%{background-position:100% 0}
 }
-.lock-icon{
-  font-size:52px;
-  margin-bottom:8px;
+.auth-icon{
+  font-size:56px;
+  margin-bottom:12px;
   display:block;
+  animation:floatIcon 3s ease-in-out infinite;
 }
-.lock-univ{
+@keyframes floatIcon{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+.auth-univ{
   font-size:10px;
   font-weight:600;
   color:var(--mut);
   letter-spacing:2px;
-  margin-bottom:6px;
+  margin-bottom:8px;
   text-transform:uppercase;
 }
-.lock-title{
-  font-size:20px;
+.auth-title{
+  font-size:22px;
   font-weight:700;
-  margin:0 0 4px;
+  margin:0 0 8px;
   color:var(--tx);
   letter-spacing:-.02em;
 }
-.lock-sub{
-  font-size:13px;
+.auth-sub{
+  font-size:13.5px;
   color:var(--mut);
-  margin:0 0 22px;
-  line-height:1.5;
+  margin:0 0 28px;
+  line-height:1.6;
 }
-#lockPassword{
+#authLoginBtn{
   width:100%;
-  padding:13px 16px;
-  font-size:16px;
-  font-family:inherit;
-  color:var(--tx);
-  background:var(--bg-soft);
-  border:2px solid var(--bd);
-  border-radius:11px;
-  outline:none;
-  text-align:center;
-  letter-spacing:.15em;
-  transition:border-color .2s ease,background-color .2s ease;
-  box-sizing:border-box;
-}
-#lockPassword:focus{
-  border-color:var(--ac);
-  background:var(--card);
-}
-#lockPassword::placeholder{
-  letter-spacing:normal;
-  color:var(--mut);
-}
-#lockBtn{
-  width:100%;
-  margin-top:14px;
-  padding:13px 16px;
+  padding:14px 18px;
   font-size:15px;
   font-weight:600;
   color:#fff;
   background:var(--ac);
   border:none;
-  border-radius:11px;
+  border-radius:12px;
   cursor:pointer;
-  transition:background-color .15s ease,transform .1s ease;
+  transition:all .15s ease;
   font-family:inherit;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
 }
-#lockBtn:hover{background:var(--ac-dark)}
-#lockBtn:active{transform:scale(.98)}
-#lockBtn:disabled{opacity:.6;cursor:wait}
-#lockError{
-  margin-top:12px;
+#authLoginBtn:hover:not(:disabled){
+  background:var(--ac-dark);
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(37,99,235,.3);
+}
+#authLoginBtn:active:not(:disabled){
+  transform:translateY(0) scale(.98);
+}
+#authLoginBtn:disabled{
+  opacity:.6;
+  cursor:wait;
+}
+#authError{
+  margin-top:14px;
   font-size:13px;
   color:var(--danger);
   font-weight:600;
   min-height:18px;
   opacity:0;
   transition:opacity .2s ease;
+  line-height:1.5;
 }
-#lockError.show{opacity:1}
-.lock-shake{animation:lockShake .4s ease}
-@keyframes lockShake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-8px)}
-  40%{transform:translateX(8px)}
-  60%{transform:translateX(-6px)}
-  80%{transform:translateX(6px)}
+#authError.show{opacity:1}
+
+/* ⏳ شاشة التحميل */
+#loadingScreen{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:16px;
+  background:var(--bg);
+  transition:opacity .3s ease, visibility .3s ease;
+}
+#loadingScreen.hidden{
+  opacity:0;
+  visibility:hidden;
+}
+.spinner{
+  width:44px;
+  height:44px;
+  border:4px solid var(--bd);
+  border-top-color:var(--ac);
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+.loading-text{
+  font-size:14px;
+  color:var(--mut);
+  font-weight:500;
 }
 
 /* 🚪 زر الخروج */
@@ -318,9 +340,34 @@ body{
   .logout-btn{top:10px;right:10px;width:38px;height:38px;font-size:16px}
 }
 
+/* 👤 معلومات الطالب */
+.user-info{
+  position:fixed;
+  top:16px;
+  right:70px;
+  z-index:100;
+  max-width:220px;
+  padding:8px 14px;
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:20px;
+  box-shadow:var(--shadow-sm);
+  font-size:11.5px;
+  color:var(--mut);
+  font-weight:500;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:opacity .2s ease;
+}
+@media (max-width:480px){
+  .user-info{top:10px;right:60px;max-width:140px;font-size:10.5px;padding:6px 10px}
+}
+
 #mainApp{transition:opacity .3s ease}
 #mainApp.hidden{display:none}
 
+/* الهيدر */
 .header{
   text-align:center;
   margin:4px 0 20px;
@@ -359,6 +406,7 @@ body{
   line-height:1.2;
 }
 
+/* الكروت */
 .c{
   background:var(--card);
   border:1px solid var(--bd);
@@ -373,6 +421,7 @@ body{
   border-color:var(--bd-strong);
 }
 
+/* شريط الأنبوبة */
 .tube-bar{
   background:var(--card);
   border:1px solid var(--bd);
@@ -416,6 +465,7 @@ body{
   color:var(--tx-soft);
 }
 
+/* الأنبوبة */
 .tube{
   width:52px;
   height:118px;
@@ -497,6 +547,7 @@ body{
   100%{transform:translate(-50%,-200%) scale(2);opacity:0}
 }
 
+/* الأزرار */
 button,select{
   font:inherit;
   font-weight:500;
@@ -682,19 +733,29 @@ h3{
 <div class="stars" id="starsContainer"></div>
 <div class="bg-animation" id="bgAnimation"></div>
 
-<!-- 🔒 شاشة القفل -->
-<div id="lockScreen">
-  <div class="lock-card" id="lockCard">
-    <span class="lock-icon">🔒</span>
-    <div class="lock-univ">Alamein International University</div>
-    <h2 class="lock-title">Acidic Radicals Lab</h2>
-    <p class="lock-sub">هذا الموقع خاص بجامعة العلمين الدولية<br>الرجاء إدخال كلمة المرور للدخول</p>
+<!-- ⏳ شاشة التحميل -->
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <div class="loading-text">جاري التحميل...</div>
+</div>
 
-    <input type="password" id="lockPassword" placeholder="كلمة المرور" autocomplete="off" />
+<!-- 🔐 شاشة تسجيل الدخول -->
+<div id="authScreen" class="hidden">
+  <div class="auth-card">
+    <span class="auth-icon">🔐</span>
+    <div class="auth-univ">Alamein International University</div>
+    <h2 class="auth-title">Acidic Radicals Lab</h2>
+    <p class="auth-sub">
+      Sign in with your university email<br>
+      <span style="font-size:12px">(only @aiu.edu.eg emails allowed)</span>
+    </p>
 
-    <button type="button" id="lockBtn">دخول</button>
+    <button type="button" id="authLoginBtn">
+      <span>✉️</span>
+      <span>Sign in with Email</span>
+    </button>
 
-    <div id="lockError">❌ كلمة المرور غير صحيحة</div>
+    <div id="authError"></div>
   </div>
 </div>
 
@@ -702,12 +763,13 @@ h3{
 <div id="mainApp" class="hidden">
 
   <div class="top-controls">
-    <button type="button" id="soundToggle" title="كتم/تشغيل الصوت">🔊</button>
-    <button type="button" id="themeLight" title="الوضع النهاري">☀️</button>
-    <button type="button" id="themeDark" title="الوضع الليلي">🌙</button>
+    <button type="button" id="soundToggle" title="Sound on/off">🔊</button>
+    <button type="button" id="themeLight" title="Light mode">☀️</button>
+    <button type="button" id="themeDark" title="Dark mode">🌙</button>
   </div>
 
-  <button type="button" class="logout-btn" id="logoutBtn" title="خروج">🚪</button>
+  <div class="user-info" id="userInfo">👤 ...</div>
+  <button type="button" class="logout-btn" id="logoutBtn" title="Sign out">🚪</button>
 
   <div class="header">
     <div class="univ">Alamein International University</div>
@@ -819,146 +881,128 @@ h3{
 
 </div><!-- /#mainApp -->
 
+<!-- Auth0 SDK -->
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
+
 <script>
 /* ═══════════════════════════════════════════════════════════
-   🔐 نظام القفل — يقرأ كلمة السر من ملف password.json
+   🔐 Auth0 Configuration
    ═══════════════════════════════════════════════════════════ */
+const AUTH0_DOMAIN = 'dev-y7trwb8kl8qouyvw.us.auth0.com';
+const AUTH0_CLIENT_ID = 'Xb8GG2KmW1mOVk9l0KAfIx65qbHDnSTS';
+const AUTH0_REDIRECT_URI = 'https://acidic-radicals.pages.dev';
 
-var ARL_UNLOCK_KEY = 'arl_unlocked_v1';
-var ARL_PASSWORD_CACHE = null;
-var ARL_PASSWORD_DEFAULT = 'AIU2026';
+let auth0Client = null;
 
-function arlIsUnlocked(){
-  try{ return localStorage.getItem(ARL_UNLOCK_KEY) === 'yes'; }
-  catch(e){ return false; }
-}
-
-function arlSetUnlocked(){
-  try{ localStorage.setItem(ARL_UNLOCK_KEY, 'yes'); }catch(e){}
-}
-
-function arlLock(){
-  try{ localStorage.removeItem(ARL_UNLOCK_KEY); }catch(e){}
-  var lock = document.getElementById('lockScreen');
-  var main = document.getElementById('mainApp');
-  var input = document.getElementById('lockPassword');
-  var err = document.getElementById('lockError');
-  if(lock) lock.classList.remove('hidden');
-  if(main) main.classList.add('hidden');
-  if(input){
-    input.value = '';
-    setTimeout(function(){ try{ input.focus(); }catch(e){} }, 100);
-  }
-  if(err) err.classList.remove('show');
-}
-
-function arlLoadPassword(callback){
-  if(ARL_PASSWORD_CACHE){
-    callback(ARL_PASSWORD_CACHE);
-    return;
-  }
-
-  fetch('password.json?t=' + Date.now(), { cache: 'no-store' })
-    .then(function(res){
-      if(!res.ok) throw new Error('File not found');
-      return res.json();
-    })
-    .then(function(data){
-      if(data && typeof data.password === 'string' && data.password.length > 0){
-        ARL_PASSWORD_CACHE = data.password;
-        callback(ARL_PASSWORD_CACHE);
-      } else {
-        ARL_PASSWORD_CACHE = ARL_PASSWORD_DEFAULT;
-        callback(ARL_PASSWORD_CACHE);
-      }
-    })
-    .catch(function(err){
-      console.warn('password.json not found, using default:', ARL_PASSWORD_DEFAULT);
-      ARL_PASSWORD_CACHE = ARL_PASSWORD_DEFAULT;
-      callback(ARL_PASSWORD_CACHE);
-    });
-}
-
-function arlCheckPassword(input){
-  arlLoadPassword(function(correctPassword){
-    if(input === correctPassword){
-      arlSetUnlocked();
-      arlShowApp();
-    } else {
-      arlShowError();
-    }
+// تهيئة Auth0
+async function initAuth0(){
+  auth0Client = await auth0.createAuth0Client({
+    domain: AUTH0_DOMAIN,
+    clientId: AUTH0_CLIENT_ID,
+    authorizationParams: {
+      redirect_uri: AUTH0_REDIRECT_URI
+    },
+    cacheLocation: 'localstorage',
+    useRefreshTokens: true
   });
-}
 
-function arlShowError(){
-  var err = document.getElementById('lockError');
-  var card = document.getElementById('lockCard');
-  var input = document.getElementById('lockPassword');
-  if(err) err.classList.add('show');
-  if(card){
-    card.classList.remove('lock-shake');
-    void card.offsetWidth;
-    card.classList.add('lock-shake');
-  }
-  if(input){
-    input.value = '';
-    try{ input.focus(); }catch(e){}
+  // معالجة الـ callback بعد الرجوع من Auth0
+  if(window.location.search.includes('code=') && window.location.search.includes('state=')){
+    try{
+      await auth0Client.handleRedirectCallback();
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }catch(e){
+      console.error('Callback error:', e);
+    }
   }
 }
 
-function arlShowApp(){
-  var lock = document.getElementById('lockScreen');
-  var main = document.getElementById('mainApp');
-  if(lock) lock.classList.add('hidden');
-  if(main) main.classList.remove('hidden');
+// التحقق من حالة تسجيل الدخول
+async function checkAuth(){
+  try{
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if(isAuthenticated){
+      const user = await auth0Client.getUser();
+      showMainApp(user);
+    } else {
+      showAuthScreen();
+    }
+  }catch(e){
+    console.error('Auth check error:', e);
+    showAuthScreen();
+  }
+}
+
+// عرض شاشة تسجيل الدخول
+function showAuthScreen(){
+  document.getElementById('loadingScreen').classList.add('hidden');
+  document.getElementById('authScreen').classList.remove('hidden');
+  document.getElementById('mainApp').classList.add('hidden');
+}
+
+// عرض الموقع الرئيسي
+function showMainApp(user){
+  document.getElementById('loadingScreen').classList.add('hidden');
+  document.getElementById('authScreen').classList.add('hidden');
+  document.getElementById('mainApp').classList.remove('hidden');
+
+  // عرض الإيميل
+  if(user && user.email){
+    document.getElementById('userInfo').textContent = '👤 ' + user.email;
+  }
+
+  // تشغيل الموقع
   if(typeof arlBootApp === 'function'){
     arlBootApp();
   }
 }
 
-function arlInitLock(){
-  if(arlIsUnlocked()){
-    arlShowApp();
-    return;
-  }
+// تسجيل الدخول
+async function login(){
+  const btn = document.getElementById('authLoginBtn');
+  const err = document.getElementById('authError');
+  btn.disabled = true;
+  err.classList.remove('show');
 
-  var input = document.getElementById('lockPassword');
-  var btn = document.getElementById('lockBtn');
-
-  if(btn){
-    btn.addEventListener('click', function(){
-      var val = (input && input.value) ? input.value.trim() : '';
-      if(!val) return;
-      arlCheckPassword(val);
-    });
-  }
-
-  if(input){
-    input.addEventListener('keydown', function(e){
-      if(e.key === 'Enter'){
-        e.preventDefault();
-        var val = this.value.trim();
-        if(val) arlCheckPassword(val);
+  try{
+    await auth0Client.loginWithPopup({
+      authorizationParams: {
+        redirect_uri: AUTH0_REDIRECT_URI,
+        scope: 'openid profile email'
       }
     });
-    setTimeout(function(){ try{ input.focus(); }catch(e){} }, 100);
+    const user = await auth0Client.getUser();
+    showMainApp(user);
+  }catch(e){
+    console.error('Login error:', e);
+    // لو popup فشل، نجرب redirect
+    if(e.message && (e.message.includes('popup') || e.message.includes('Popup'))){
+      await auth0Client.loginWithRedirect();
+    } else {
+      err.textContent = '❌ Sign-in failed. Please try again.';
+      err.classList.add('show');
+      btn.disabled = false;
+    }
   }
 }
 
-/* 🚪 زر الخروج — نسخة مبسطة ومضمونة */
-function arlInitLogout(){
-  var btn = document.getElementById('logoutBtn');
-  if(!btn) return;
-
-  btn.addEventListener('click', function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    arlLock();
-  });
+// تسجيل الخروج
+async function logout(){
+  try{
+    await auth0Client.logout({
+      logoutParams: {
+        returnTo: AUTH0_REDIRECT_URI
+      }
+    });
+  }catch(e){
+    console.error('Logout error:', e);
+    // fallback
+    window.location.href = 'https://' + AUTH0_DOMAIN + '/v2/logout?client_id=' + AUTH0_CLIENT_ID + '&returnTo=' + encodeURIComponent(AUTH0_REDIRECT_URI);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   الجزء الأصلي
+   الجزء الأصلي من الموقع
    ═══════════════════════════════════════════════════════════ */
 
 (function initStars(){
@@ -1099,7 +1143,7 @@ document.addEventListener('click', (e) => {
   const btn = e.target.closest('button');
   if(!btn || btn.disabled) return;
   if(btn.closest('.top-controls')) return;
-  if(btn.id === 'lockBtn') return;
+  if(btn.id === 'authLoginBtn') return;
   if(btn.id === 'logoutBtn') return;
   playClick();
   const rect = btn.getBoundingClientRect();
@@ -1418,6 +1462,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+/* ─────────── أزرار الوضع ─────────── */
 var ARL_THEME_KEY = 'arl_theme_simple';
 
 function arlSetTheme(theme){
@@ -1492,6 +1537,14 @@ function arlBootApp(){
   start();
 }
 
+/* ─────────── ربط الأزرار ─────────── */
+document.getElementById('authLoginBtn').addEventListener('click', login);
+document.getElementById('logoutBtn').addEventListener('click', function(e){
+  e.preventDefault();
+  e.stopPropagation();
+  logout();
+});
+
 // الدوال المطلوبة للـ onclick
 window.start = start;
 window.add = add;
@@ -1502,13 +1555,21 @@ window.confC = confC;
 window.heat = heat;
 window.ans = ans;
 
+/* ─────────── بدء التطبيق ─────────── */
+async function boot(){
+  try{
+    await initAuth0();
+    await checkAuth();
+  }catch(e){
+    console.error('Boot error:', e);
+    // لو حصل خطأ، نظهر شاشة الدخول
+    showAuthScreen();
+  }
+}
+
 if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', function(){
-    arlInitLock();
-    arlInitLogout();
-  });
+  document.addEventListener('DOMContentLoaded', boot);
 } else {
-  arlInitLock();
-  arlInitLogout();
+  boot();
 }
 </script></body></html>
