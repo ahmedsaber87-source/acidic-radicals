@@ -957,32 +957,29 @@ function showMainApp(user){
   }
 }
 
-// تسجيل الدخول
+// ✅ تسجيل الدخول — Passwordless Email (Magic Link)
 async function login(){
   const btn = document.getElementById('authLoginBtn');
   const err = document.getElementById('authError');
-  btn.disabled = true;
-  err.classList.remove('show');
+  if(btn) btn.disabled = true;
+  if(err) err.classList.remove('show');
 
   try{
-    await auth0Client.loginWithPopup({
+    await auth0Client.loginWithRedirect({
       authorizationParams: {
         redirect_uri: AUTH0_REDIRECT_URI,
+        connection: 'email',
         scope: 'openid profile email'
       }
     });
-    const user = await auth0Client.getUser();
-    showMainApp(user);
+    // مش هيوصل هنا — هيتم redirect
   }catch(e){
     console.error('Login error:', e);
-    // لو popup فشل، نجرب redirect
-    if(e.message && (e.message.includes('popup') || e.message.includes('Popup'))){
-      await auth0Client.loginWithRedirect();
-    } else {
+    if(err){
       err.textContent = '❌ Sign-in failed. Please try again.';
       err.classList.add('show');
-      btn.disabled = false;
     }
+    if(btn) btn.disabled = false;
   }
 }
 
