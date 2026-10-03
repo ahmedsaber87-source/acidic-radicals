@@ -100,7 +100,6 @@ body{
   min-height:100vh;
 }
 
-/* 🌌 الخلفية */
 .cosmic-bg{
   position:fixed;
   inset:0;
@@ -159,7 +158,6 @@ body{
   100%{transform:translateY(-10vh) scale(1);opacity:0}
 }
 
-/* 🔐 شاشة تسجيل الدخول */
 #authScreen{
   position:fixed;
   inset:0;
@@ -274,7 +272,6 @@ body{
 }
 #authError.show{opacity:1}
 
-/* ⏳ شاشة التحميل */
 #loadingScreen{
   position:fixed;
   inset:0;
@@ -308,7 +305,6 @@ body{
   font-weight:500;
 }
 
-/* 🚪 زر الخروج */
 .logout-btn{
   position:fixed;
   top:16px;
@@ -340,7 +336,6 @@ body{
   .logout-btn{top:10px;right:10px;width:38px;height:38px;font-size:16px}
 }
 
-/* 👤 معلومات الطالب */
 .user-info{
   position:fixed;
   top:16px;
@@ -367,7 +362,6 @@ body{
 #mainApp{transition:opacity .3s ease}
 #mainApp.hidden{display:none}
 
-/* الهيدر */
 .header{
   text-align:center;
   margin:4px 0 20px;
@@ -406,7 +400,6 @@ body{
   line-height:1.2;
 }
 
-/* الكروت */
 .c{
   background:var(--card);
   border:1px solid var(--bd);
@@ -421,7 +414,6 @@ body{
   border-color:var(--bd-strong);
 }
 
-/* شريط الأنبوبة */
 .tube-bar{
   background:var(--card);
   border:1px solid var(--bd);
@@ -465,7 +457,6 @@ body{
   color:var(--tx-soft);
 }
 
-/* الأنبوبة */
 .tube{
   width:52px;
   height:118px;
@@ -547,7 +538,6 @@ body{
   100%{transform:translate(-50%,-200%) scale(2);opacity:0}
 }
 
-/* الأزرار */
 button,select{
   font:inherit;
   font-weight:500;
@@ -900,7 +890,9 @@ async function initAuth0(){
     domain: AUTH0_DOMAIN,
     clientId: AUTH0_CLIENT_ID,
     authorizationParams: {
-      redirect_uri: AUTH0_REDIRECT_URI
+      redirect_uri: AUTH0_REDIRECT_URI,
+      connection: 'email',
+      scope: 'openid profile email'
     },
     cacheLocation: 'localstorage',
     useRefreshTokens: true
@@ -1459,7 +1451,6 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-/* ─────────── أزرار الوضع ─────────── */
 var ARL_THEME_KEY = 'arl_theme_simple';
 
 function arlSetTheme(theme){
@@ -1534,7 +1525,6 @@ function arlBootApp(){
   start();
 }
 
-/* ─────────── ربط الأزرار ─────────── */
 document.getElementById('authLoginBtn').addEventListener('click', login);
 document.getElementById('logoutBtn').addEventListener('click', function(e){
   e.preventDefault();
@@ -1542,7 +1532,6 @@ document.getElementById('logoutBtn').addEventListener('click', function(e){
   logout();
 });
 
-// الدوال المطلوبة للـ onclick
 window.start = start;
 window.add = add;
 window.gt = gt;
@@ -1552,14 +1541,12 @@ window.confC = confC;
 window.heat = heat;
 window.ans = ans;
 
-/* ─────────── بدء التطبيق ─────────── */
 async function boot(){
   try{
     await initAuth0();
     await checkAuth();
   }catch(e){
     console.error('Boot error:', e);
-    // لو حصل خطأ، نظهر شاشة الدخول
     showAuthScreen();
   }
 }
