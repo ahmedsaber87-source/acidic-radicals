@@ -1,209 +1,1034 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>معمل الشقوق الحمضية</title>
+<title>Acidic Radicals Lab</title>
 <style>
-:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#667;--ac:#1a6fd4;--bd:#d9dde3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181c;--card:#1f242a;--tx:#eceff3;--mut:#9aa3ad;--ac:#5aa2ff;--bd:#343b44}}
-:root[data-theme="dark"]{--bg:#15181c;--card:#1f242a;--tx:#eceff3;--mut:#9aa3ad;--ac:#5aa2ff;--bd:#343b44}
+:root{
+  --bg:#f4f6fa;
+  --bg-soft:#eaeef5;
+  --card:#ffffff;
+  --tx:#0f172a;
+  --tx-soft:#334155;
+  --mut:#64748b;
+  --ac:#2563eb;
+  --ac-dark:#1d4ed8;
+  --ac-soft:rgba(37,99,235,.08);
+  --success:#16a34a;
+  --danger:#dc2626;
+  --bd:#e2e8f0;
+  --bd-strong:#cbd5e1;
+  --shadow-sm:0 1px 2px rgba(15,23,42,.05);
+  --shadow:0 1px 3px rgba(15,23,42,.08),0 1px 2px rgba(15,23,42,.04);
+  --shadow-md:0 4px 12px rgba(15,23,42,.08),0 2px 4px rgba(15,23,42,.04);
+  --shadow-lg:0 10px 25px rgba(15,23,42,.1),0 4px 8px rgba(15,23,42,.04);
+  --bubble-color:rgba(37,99,235,.15);
+  --nebula-1:rgba(99,102,241,.18);
+  --nebula-2:rgba(236,72,153,.12);
+  --nebula-3:rgba(6,182,212,.14);
+  --star-color:rgba(37,99,235,.55);
+  --star-glow:rgba(96,165,250,.9);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+/* ✅ الوضع الفاتح — افتراضي */
+:root, :root[data-theme="light"]{
+  --bg:#f4f6fa;
+  --bg-soft:#eaeef5;
+  --card:#ffffff;
+  --tx:#0f172a;
+  --tx-soft:#334155;
+  --mut:#64748b;
+  --ac:#2563eb;
+  --ac-dark:#1d4ed8;
+  --ac-soft:rgba(37,99,235,.08);
+  --success:#16a34a;
+  --danger:#dc2626;
+  --bd:#e2e8f0;
+  --bd-strong:#cbd5e1;
+  --bubble-color:rgba(37,99,235,.15);
+  --nebula-1:rgba(99,102,241,.18);
+  --nebula-2:rgba(236,72,153,.12);
+  --nebula-3:rgba(6,182,212,.14);
+  --star-color:rgba(37,99,235,.55);
+  --star-glow:rgba(96,165,250,.9);
+  --shadow-sm:0 1px 2px rgba(15,23,42,.05);
+  --shadow:0 1px 3px rgba(15,23,42,.08),0 1px 2px rgba(15,23,42,.04);
+  --shadow-md:0 4px 12px rgba(15,23,42,.08),0 2px 4px rgba(15,23,42,.04);
+  --shadow-lg:0 10px 25px rgba(15,23,42,.1),0 4px 8px rgba(15,23,42,.04);
+}
+/* ✅ الوضع الليلي */
+:root[data-theme="dark"]{
+  --bg:#0b1120;
+  --bg-soft:#111827;
+  --card:#1e293b;
+  --tx:#f1f5f9;
+  --tx-soft:#cbd5e1;
+  --mut:#94a3b8;
+  --ac:#60a5fa;
+  --ac-dark:#3b82f6;
+  --ac-soft:rgba(96,165,250,.12);
+  --success:#4ade80;
+  --danger:#f87171;
+  --bd:#334155;
+  --bd-strong:#475569;
+  --bubble-color:rgba(96,165,250,.18);
+  --nebula-1:rgba(139,92,246,.28);
+  --nebula-2:rgba(236,72,153,.2);
+  --nebula-3:rgba(6,182,212,.22);
+  --star-color:rgba(147,197,253,.75);
+  --star-glow:rgba(191,219,254,.95);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow:0 1px 3px rgba(0,0,0,.4),0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:0 4px 12px rgba(0,0,0,.4),0 2px 4px rgba(0,0,0,.3);
+  --shadow-lg:0 10px 25px rgba(0,0,0,.5),0 4px 8px rgba(0,0,0,.3);
+}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,"Segoe UI",Tahoma,sans-serif;padding:12px;max-width:640px;margin-inline:auto}
-h1{font-size:20px;margin:6px 0}
-.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:10px 0}
-button,select{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;margin:3px;cursor:pointer}
+*{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--tx);
+  font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  padding:16px 14px 32px;
+  max-width:680px;
+  margin-inline:auto;
+  line-height:1.55;
+  font-size:15px;
+  letter-spacing:-.01em;
+  transition:background-color .25s ease,color .25s ease;
+  position:relative;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* 🌌 الخلفية العالمية */
+.cosmic-bg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-3;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 30%, var(--nebula-1), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 80% 70%, var(--nebula-2), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 50% 10%, var(--nebula-3), transparent 70%);
+  animation:nebulaMove 25s ease-in-out infinite alternate;
+}
+@keyframes nebulaMove{
+  0%{background-position:0% 0%,100% 100%,50% 0%;filter:hue-rotate(0deg)}
+  50%{filter:hue-rotate(15deg)}
+  100%{background-position:20% 10%,80% 90%,60% 5%;filter:hue-rotate(0deg)}
+}
+.stars{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-2;
+  overflow:hidden;
+}
+.star{
+  position:absolute;
+  background:var(--star-color);
+  border-radius:50%;
+  box-shadow:0 0 6px var(--star-glow),0 0 12px var(--star-glow);
+  animation:twinkle linear infinite;
+  will-change:opacity,transform;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.15;transform:scale(.8)}
+  50%{opacity:1;transform:scale(1.4)}
+}
+.bg-animation{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  overflow:hidden;
+}
+.bubble{
+  position:absolute;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,var(--bubble-color),transparent 70%);
+  animation:floatUp linear infinite;
+  opacity:0;
+  will-change:transform,opacity;
+}
+@keyframes floatUp{
+  0%{transform:translateY(110vh) scale(.3);opacity:0}
+  10%{opacity:.5}
+  90%{opacity:.5}
+  100%{transform:translateY(-10vh) scale(1);opacity:0}
+}
+
+/* الهيدر */
+.header{
+  text-align:center;
+  margin:4px 0 20px;
+  padding:20px 16px;
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:16px;
+  box-shadow:var(--shadow-md);
+  position:relative;
+  overflow:hidden;
+}
+.header::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--ac),transparent);
+  opacity:.7;
+  background-size:200% 100%;
+  animation:slideGradient 4s linear infinite;
+}
+@keyframes slideGradient{
+  0%{background-position:-100% 0}
+  100%{background-position:100% 0}
+}
+.header .univ{
+  font-size:11px;
+  font-weight:600;
+  color:var(--mut);
+  letter-spacing:2px;
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
+.header h1{
+  font-size:23px;
+  margin:0;
+  font-weight:700;
+  color:var(--tx);
+  letter-spacing:-.02em;
+  line-height:1.2;
+}
+
+/* الكروت */
+.c{
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:14px;
+  padding:16px;
+  margin:10px 0;
+  box-shadow:var(--shadow);
+  transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease;
+}
+.c:hover{
+  box-shadow:var(--shadow-md);
+  border-color:var(--bd-strong);
+}
+
+/* شريط الأنبوبة */
+.tube-bar{
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:14px;
+  padding:14px 16px;
+  margin:10px 0;
+  display:flex;
+  gap:16px;
+  align-items:center;
+  box-shadow:var(--shadow);
+  transition:box-shadow .2s ease,transform .2s ease;
+}
+.tube-bar:hover{box-shadow:var(--shadow-md)}
+.tube-bar .tube-wrap{width:86px;flex-shrink:0;position:relative}
+.tube-bar .tube-obs{
+  flex:1;
+  font-size:14px;
+  line-height:1.5;
+  font-weight:500;
+  color:var(--tx-soft);
+  transition:color .2s;
+}
+.tube-row{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  padding:14px;
+  background:var(--bg-soft);
+  border-radius:12px;
+  margin-bottom:12px;
+  border:1px solid var(--bd);
+  transition:border-color .2s ease;
+}
+.tube-row:hover{border-color:var(--bd-strong)}
+.tube-row .tube-wrap{width:86px;flex-shrink:0;position:relative}
+.tube-row .sol-obs{
+  flex:1;
+  font-size:14px;
+  line-height:1.5;
+  font-weight:500;
+  color:var(--tx-soft);
+}
+
+/* الأنبوبة */
+.tube{
+  width:52px;
+  height:118px;
+  border:2.5px solid var(--bd-strong);
+  border-top:none;
+  border-radius:0 0 26px 26px;
+  margin:6px auto;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);
+  box-shadow:inset 0 -8px 16px rgba(100,116,139,.08),0 1px 3px rgba(15,23,42,.08);
+  transition:box-shadow .3s ease;
+}
+:root[data-theme="dark"] .tube{
+  background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);
+  box-shadow:inset 0 -8px 16px rgba(0,0,0,.4),0 1px 3px rgba(0,0,0,.5);
+}
+.tube::before{
+  content:'';
+  position:absolute;
+  top:0;left:5px;
+  width:5px;height:100%;
+  background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.2));
+  border-radius:3px;
+  z-index:5;
+  pointer-events:none;
+  opacity:.6;
+}
+.tube.pulse{animation:tubePulse .6s ease}
+@keyframes tubePulse{
+  0%{transform:scale(1);box-shadow:inset 0 -8px 16px rgba(100,116,139,.08),0 1px 3px rgba(15,23,42,.08)}
+  50%{transform:scale(1.08);box-shadow:inset 0 -8px 16px rgba(100,116,139,.15),0 4px 20px rgba(37,99,235,.4)}
+  100%{transform:scale(1);box-shadow:inset 0 -8px 16px rgba(100,116,139,.08),0 1px 3px rgba(15,23,42,.08)}
+}
+.liq{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:70%;
+  transition:background-color .5s cubic-bezier(.4,0,.2,1);
+  background:rgba(120,180,255,.25);
+}
+.liq.bubbling::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 20% 80%,rgba(255,255,255,.5) 2px,transparent 3px),
+    radial-gradient(circle at 60% 60%,rgba(255,255,255,.4) 1.5px,transparent 2.5px),
+    radial-gradient(circle at 40% 30%,rgba(255,255,255,.5) 2px,transparent 3px);
+  background-size:100% 100%;
+  animation:bubbleMove 1.2s ease-in-out infinite;
+  opacity:.7;
+}
+@keyframes bubbleMove{
+  0%{transform:translateY(0);opacity:.7}
+  100%{transform:translateY(-100%);opacity:0}
+}
+.ppt{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:0;
+  transition:all .5s cubic-bezier(.4,0,.2,1);
+  background:transparent;
+}
+.sparkle{
+  position:absolute;
+  top:50%;left:50%;
+  width:6px;height:6px;
+  background:radial-gradient(circle,#fff 0%,rgba(96,165,250,.9) 40%,transparent 70%);
+  border-radius:50%;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  animation:sparkleFly .9s ease-out forwards;
+}
+@keyframes sparkleFly{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:1}
+  100%{transform:translate(-50%,-200%) scale(2);opacity:0}
+}
+
+/* الأزرار */
+button,select{
+  font:inherit;
+  font-weight:500;
+  font-size:14px;
+  color:var(--tx);
+  background:var(--card);
+  border:1px solid var(--bd-strong);
+  border-radius:9px;
+  padding:9px 14px;
+  margin:3px;
+  cursor:pointer;
+  transition:all .15s ease;
+  letter-spacing:-.005em;
+  font-family:inherit;
+  position:relative;
+  overflow:hidden;
+}
+button:hover:not(:disabled){
+  border-color:var(--ac);
+  color:var(--ac);
+  background:var(--ac-soft);
+  transform:translateY(-1px);
+  box-shadow:var(--shadow-sm);
+}
+button:active:not(:disabled){
+  transform:translateY(0) scale(.97);
+  box-shadow:none;
+}
 button:disabled{opacity:.4;cursor:not-allowed}
-button:active:not(:disabled){background:var(--bd)}
-.g{display:flex;flex-wrap:wrap}
-.tube{width:46px;height:110px;border:3px solid var(--mut);border-top:none;border-radius:0 0 24px 24px;margin:6px auto;position:relative;overflow:hidden;background:#fcfcfc}
-.liq{position:absolute;bottom:0;width:100%;height:70%;transition:.4s;background:rgba(120,180,255,.3)}
-.ppt{position:absolute;bottom:0;width:100%;height:0;transition:.4s;background:transparent}
-.row{display:flex;gap:12px;align-items:center}
-.log div{padding:6px 0;border-bottom:1px solid var(--bd);font-size:14px}
-.m{color:var(--mut);font-size:13px}
-h3{margin:4px 0;font-size:15px}
-.ok{color:#1a8f3c;font-weight:bold}.no{color:#d33;font-weight:bold}
-.step{background:#fff8e6;border:1px solid #f0c96a;border-radius:8px;padding:8px;margin:8px 0;font-size:13px}
-:root[data-theme="dark"] .step{background:#2a2416;border-color:#5a4a1a}
-.locked{opacity:.35;pointer-events:none}
+select{padding:9px 14px;cursor:pointer;font-weight:500}
+select:hover{border-color:var(--ac)}
+select:focus,button:focus-visible{
+  outline:2px solid var(--ac);
+  outline-offset:1px;
+}
+button .ripple{
+  position:absolute;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(37,99,235,.4),transparent 70%);
+  transform:scale(0);
+  animation:rippleAnim .6s ease-out;
+  pointer-events:none;
+}
+@keyframes rippleAnim{
+  to{transform:scale(4);opacity:0}
+}
+#btn_hcl{
+  background:var(--ac);
+  color:#fff;
+  border-color:var(--ac);
+  font-weight:600;
+  box-shadow:0 1px 2px rgba(37,99,235,.2),0 2px 4px rgba(37,99,235,.1);
+}
+#btn_hcl:hover:not(:disabled){
+  background:var(--ac-dark);
+  color:#fff;
+  border-color:var(--ac-dark);
+  box-shadow:0 4px 12px rgba(37,99,235,.3);
+}
+#btn_hcl:active:not(:disabled){background:var(--ac-dark)}
+#btn_hcl:disabled{
+  background:var(--mut);
+  border-color:var(--mut);
+  color:#fff;
+  opacity:.5;
+}
+
+.g{display:flex;flex-wrap:wrap;gap:2px}
+.row{display:flex;gap:14px;align-items:center}
+
+.log{
+  max-height:280px;
+  overflow-y:auto;
+  border-radius:8px;
+}
+.log div{
+  padding:9px 12px;
+  border-bottom:1px solid var(--bd);
+  font-size:13.5px;
+  line-height:1.5;
+  transition:background-color .15s ease;
+}
+.log div:last-child{border-bottom:none}
+.log div:hover{background:var(--bg-soft)}
+
+.m{color:var(--mut);font-size:13.5px;line-height:1.65;font-weight:400}
+h3{
+  margin:4px 0 12px;
+  font-size:15px;
+  font-weight:600;
+  color:var(--tx);
+  letter-spacing:-.01em;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.ok{color:var(--success);font-weight:700}
+.no{color:var(--danger);font-weight:700}
+.locked{
+  opacity:.35;
+  pointer-events:none;
+  filter:grayscale(.4);
+  transition:opacity .25s ease;
+}
+.confetti{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:9999;
+  overflow:hidden;
+}
+.confetti-piece{
+  position:absolute;
+  width:8px;height:8px;
+  opacity:0;
+  animation:confettiFall 2.5s ease-out forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(-20px) rotate(0deg);opacity:1}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+::-webkit-scrollbar{width:7px;height:7px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bd-strong);border-radius:7px}
+::-webkit-scrollbar-thumb:hover{background:var(--mut)}
+
+@media (max-width:480px){
+  body{padding:12px 10px 28px;font-size:14.5px}
+  .header{padding:16px 12px;margin-bottom:14px}
+  .header h1{font-size:20px}
+  .header .univ{font-size:10px;letter-spacing:1.5px}
+  .c{padding:14px;border-radius:12px}
+  .tube{width:48px;height:110px}
+  .tube-bar .tube-wrap,.tube-row .tube-wrap{width:74px}
+  button,select{padding:8px 12px;font-size:13.5px}
+  .tube-bar .tube-obs,.tube-row .sol-obs{font-size:13px}
+  .tube-bar{padding:12px 14px;gap:14px}
+  .tube-row{padding:12px;gap:14px}
+}
+
+/* 🎛️ الأزرار الثابتة (صوت + نهاري + ليلي) */
+.top-controls{
+  position:fixed;
+  top:16px;
+  left:16px;
+  z-index:100;
+  display:flex;
+  gap:8px;
+}
+.top-controls button{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--card);
+  border:1px solid var(--bd);
+  box-shadow:var(--shadow-md);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  padding:0;
+  margin:0;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.top-controls button:hover{
+  transform:scale(1.1);
+  box-shadow:var(--shadow-lg);
+}
+.top-controls button:active{
+  transform:scale(.95);
+}
+/* زر نشط — يظهر الحدود الملونة */
+.top-controls button.active{
+  border-color:var(--ac);
+  box-shadow:0 0 0 2px var(--ac-soft),var(--shadow-md);
+}
+@media (max-width:480px){
+  .top-controls{top:10px;left:10px;gap:6px}
+  .top-controls button{width:38px;height:38px;font-size:16px}
+}
 </style></head><body>
 
-<h1>🧪 معمل الشقوق الحمضية</h1>
+<!-- 🌌 الخلفية العالمية -->
+<div class="cosmic-bg"></div>
+<div class="stars" id="starsContainer"></div>
 
+<!-- 🌊 الخلفية المتحركة -->
+<div class="bg-animation" id="bgAnimation"></div>
+
+<!-- 🎛️ الأزرار الثابتة: صوت + نهاري + ليلي -->
+<div class="top-controls">
+  <button type="button" id="soundToggle" title="كتم/تشغيل الصوت">🔊</button>
+  <button type="button" id="themeLight" title="الوضع النهاري">☀️</button>
+  <button type="button" id="themeDark" title="الوضع الليلي">🌙</button>
+</div>
+
+<!-- ═══════════ الهيدر ═══════════ -->
+<div class="header">
+  <div class="univ">Alamein International University</div>
+  <h1>Acidic Radicals Lab</h1>
+</div>
+
+<!-- ═══════════ بطاقة البدء ═══════════ -->
 <div class="c">
 <div class="m">حسب شيت المعمل (إشراف أ.د. السيد الأشطوخي). الأنبوبة فيها ملح مجهول، اتبع الخطوات بالترتيب لاكتشاف الأنيون.</div>
+<div style="margin-top:12px">
 <select id="mode"></select><button onclick="start()">ابدأ / مجهول جديد</button>
 </div>
-
-<div class="c row">
-<div style="width:90px"><div class="tube"><div class="liq" id="liq"></div><div class="ppt" id="ppt"></div></div></div>
-<div id="obs" style="flex:1;font-size:15px">اضغط على اختبار…</div>
 </div>
 
-<!-- المرحلة 1: HCl إجباري -->
+<!-- ═══════════ الأنبوبة 1 ═══════════ -->
+<div class="tube-bar">
+  <div class="tube-wrap">
+    <div class="tube" id="tube1"><div class="liq" id="liq1"></div><div class="ppt" id="ppt1"></div></div>
+  </div>
+  <div class="tube-obs" id="obs1">اضغط على اختبار…</div>
+</div>
+
+<!-- ═══════════ المرحلة 1 ═══════════ -->
 <div class="c" id="stage1">
-<h3>🔒 المرحلة 1 (إجبارية): ملح + HCl مخفف</h3>
+<h3>🔒 المرحلة 1: ملح + HCl مخفف</h3>
 <div class="g"><button id="btn_hcl" onclick="add('hcl')">أضف HCl مخفف</button></div>
-<div id="msg1" class="step" style="display:none"></div>
 </div>
 
-<!-- المرحلة 2: اختبار الغاز (لو فيه فوران) -->
+<!-- ═══════════ اختبار الغاز ═══════════ -->
 <div class="c locked" id="stageGas">
 <h3>💨 اختبار الغاز المتصاعد</h3>
-<div class="m">اختبر الغاز الناتج لتعرف أنيون جروب A:</div>
 <div class="g" id="s1g"></div>
 </div>
 
-<!-- المرحلة 3: H2SO4 إجباري لو مفيش فوران -->
+<!-- ═══════════ تأكيد A ═══════════ -->
+<div class="c locked" id="confirmA">
+<h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
+<div class="tube-row">
+  <div class="tube-wrap">
+    <div class="tube" id="tube2"><div class="liq" id="liq2" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt2"></div></div>
+  </div>
+  <div class="sol-obs" id="obs2">محلول الملح — أضف كاشفاً…</div>
+</div>
+<div class="g" id="cA"></div>
+</div>
+
+<!-- ═══════════ التسخين ═══════════ -->
+<div class="c locked" id="stageHeat">
+<h3>🔥 تسخين</h3>
+<div class="g"><button onclick="heat()">سخّن المحلول</button></div>
+</div>
+
+<!-- ═══════════ الأنبوبة 6 ═══════════ -->
+<div class="tube-bar locked" id="tubeBar6">
+  <div class="tube-wrap">
+    <div class="tube" id="tube6"><div class="liq" id="liq6" style="background:rgba(120,180,255,.25)"></div><div class="ppt" id="ppt6"></div></div>
+  </div>
+  <div class="tube-obs" id="obs6">ملح صلب — أضف H₂SO₄…</div>
+</div>
+
+<!-- ═══════════ المرحلة 2 ═══════════ -->
 <div class="c locked" id="stage2">
-<h3>🔒 المرحلة 2 (إجبارية للانتقال لجروب B): ملح + H₂SO₄ مركز + تسخين</h3>
-<div class="g"><button onclick="add('h2so4')">أضف H₂SO₄ مركز + سخّن</button></div>
+<h3>🔒 المرحلة 2: ملح + H₂SO₄ مركز</h3>
+<div class="g"><button onclick="add('h2so4')">أضف H₂SO₄ مركز</button></div>
 </div>
 
-<!-- اختبار K2Cr2O7 -->
-<div class="c locked" id="stageDich">
-<h3>🧪 اختبار K₂Cr₂O₇ المحمّض (بوابة الانتقال)</h3>
-<div class="m">اغمس ورقة مبللة بـ K₂Cr₂O₇ في بخار الغاز المتصاعد:</div>
-<div class="g"><button onclick="gt('dich')">اختبر بـ K₂Cr₂O₇</button></div>
+<!-- ═══════════ تأكيد B ═══════════ -->
+<div class="c locked" id="confirmB">
+<h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
+<div class="tube-row">
+  <div class="tube-wrap">
+    <div class="tube" id="tube3"><div class="liq" id="liq3" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt3"></div></div>
+  </div>
+  <div class="sol-obs" id="obs3">محلول الملح — أضف كاشفاً…</div>
+</div>
+<div class="g" id="cB"></div>
 </div>
 
-<!-- المرحلة 4: اختبارات المحلول (جروب B و C) -->
+<!-- ═══════════ الأنبوبة 7 ═══════════ -->
+<div class="tube-bar locked" id="tubeBar7">
+  <div class="tube-wrap">
+    <div class="tube" id="tube7"><div class="liq" id="liq7" style="background:rgba(120,180,255,.25)"></div><div class="ppt" id="ppt7"></div></div>
+  </div>
+  <div class="tube-obs" id="obs7">ملح صلب — أضف H₂SO₄…</div>
+</div>
+
+<!-- ═══════════ المرحلة 3 ═══════════ -->
 <div class="c locked" id="stage3">
-<h3>🔓 المرحلة 3: اختبارات على محلول الملح (جروب B و C)</h3>
-<div class="m">جروب B (Cl⁻): يتفاعل مع خلات الرصاص.</div>
-<div class="m">جروب C (SO₄²⁻ / PO₄³⁻): يتفاعل مع BaCl₂ و FeCl₃.</div>
+<h3>🔓 المرحلة 3: اختبارات على محلول الملح (جروب C)</h3>
+<div class="tube-row">
+  <div class="tube-wrap">
+    <div class="tube" id="tube4"><div class="liq" id="liq4" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt4"></div></div>
+  </div>
+  <div class="sol-obs" id="obs4">محلول الملح — أضف كاشفاً…</div>
+</div>
 <div class="g" id="s2"></div>
 </div>
 
-<div class="c"><b>سجل الملاحظات</b><div class="log" id="log"><span class="m">فاضي</span></div></div>
+<!-- ═══════════ تأكيد C ═══════════ -->
+<div class="c locked" id="confirmC">
+<h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
+<div class="tube-row">
+  <div class="tube-wrap">
+    <div class="tube" id="tube5"><div class="liq" id="liq5" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt5"></div></div>
+  </div>
+  <div class="sol-obs" id="obs5">محلول الملح — أضف كاشفاً…</div>
+</div>
+<div class="g" id="cC"></div>
+</div>
 
+<!-- ═══════════ السجل ═══════════ -->
+<div class="c"><h3>📋 سجل الملاحظات</h3><div class="log" id="log"><span class="m">فاضي</span></div></div>
+
+<!-- ═══════════ المرحلة النهائية ═══════════ -->
 <div class="c" id="answerBox" style="display:none">
-<b>المرحلة النهائية: حدّد المجموعة والأنيون</b><br>
-<div style="margin-top:8px"><b>المجموعة:</b>
+<h3>🎯 حدّد المجموعة والأنيون</h3>
+<div style="margin-top:10px"><b>المجموعة:</b>
 <select id="grp"><option value="">اختر</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></div>
-<div style="margin-top:8px"><b>الأنيون:</b></div>
+<div style="margin-top:12px"><b>الأنيون:</b></div>
 <div class="g" id="an"></div>
-<div id="res" style="margin-top:8px"></div>
+<div id="res" style="margin-top:12px"></div>
 </div>
 
 <script>
-const D=['لا نتيجة مميزة (مش من خطوات الشيت لهذا الملح)'];
-const NR=['لا تفاعل'];
+/* ═══════════ الجزء الأصلي — لم يُلمس ═══════════ */
+
+// ✨ النجوم
+(function initStars(){
+  const container = document.getElementById('starsContainer');
+  if(!container) return;
+  container.innerHTML = '';
+  const count = window.innerWidth < 480 ? 50 : 100;
+  for(let i = 0; i < count; i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDuration = (2 + Math.random() * 4) + 's';
+    s.style.animationDelay = (Math.random() * 5) + 's';
+    const size = (Math.random() * 2 + 1);
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    container.appendChild(s);
+  }
+})();
+
+// 🌊 فقاعات
+(function initBubbles(){
+  const container = document.getElementById('bgAnimation');
+  if(!container) return;
+  const count = 14;
+  for(let i = 0; i < count; i++){
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 20 + Math.random() * 60;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.left = (Math.random() * 100) + '%';
+    b.style.bottom = '-100px';
+    b.style.animationDuration = (12 + Math.random() * 12) + 's';
+    b.style.animationDelay = (Math.random() * 10) + 's';
+    container.appendChild(b);
+  }
+})();
+
+// إعادة النجوم عند resize
+let __starTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(__starTimer);
+  __starTimer = setTimeout(() => {
+    const container = document.getElementById('starsContainer');
+    if(!container) return;
+    container.innerHTML = '';
+    const count = window.innerWidth < 480 ? 50 : 100;
+    for(let i = 0; i < count; i++){
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.animationDuration = (2 + Math.random() * 4) + 's';
+      s.style.animationDelay = (Math.random() * 5) + 's';
+      const size = (Math.random() * 2 + 1);
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      container.appendChild(s);
+    }
+  }, 300);
+});
+
+// 🔊 الصوت
+let soundEnabled = true;
+let audioCtx = null;
+
+function initAudio(){
+  if(!audioCtx){
+    try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){}
+  }
+  if(audioCtx && audioCtx.state === 'suspended'){ audioCtx.resume(); }
+  return audioCtx;
+}
+function playClick(){
+  if(!soundEnabled) return;
+  const ctx = initAudio(); if(!ctx) return;
+  const osc = ctx.createOscillator(), gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(880, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.08);
+  gain.gain.setValueAtTime(0.08, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.08);
+}
+function playBubble(){
+  if(!soundEnabled) return;
+  const ctx = initAudio(); if(!ctx) return;
+  for(let i = 0; i < 4; i++){
+    const t = ctx.currentTime + i * 0.06;
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(300 + i * 150, t);
+    osc.frequency.exponentialRampToValueAtTime(600 + i * 200, t + 0.08);
+    gain.gain.setValueAtTime(0.06, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(t); osc.stop(t + 0.1);
+  }
+}
+function playSuccess(){
+  if(!soundEnabled) return;
+  const ctx = initAudio(); if(!ctx) return;
+  const notes = [523.25, 659.25, 783.99, 1046.50];
+  notes.forEach((freq, i) => {
+    const t = ctx.currentTime + i * 0.1;
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(0.08, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(t); osc.stop(t + 0.4);
+  });
+}
+function playError(){
+  if(!soundEnabled) return;
+  const ctx = initAudio(); if(!ctx) return;
+  const osc = ctx.createOscillator(), gain = ctx.createGain();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(180, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 0.25);
+  gain.gain.setValueAtTime(0.06, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.25);
+}
+
+const soundToggle = document.getElementById('soundToggle');
+if(soundToggle){
+  soundToggle.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+    if(soundEnabled) playClick();
+  });
+}
+
+// ✨ Ripple
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if(!btn || btn.disabled) return;
+  if(btn.closest('.top-controls')) return;
+  playClick();
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+  ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+  btn.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
+}, true);
+
+// 🎉 Confetti
+function celebrate(){
+  const colors = ['#2563eb','#16a34a','#f59e0b','#ec4899','#8b5cf6','#06b6d4'];
+  const container = document.createElement('div');
+  container.className = 'confetti';
+  document.body.appendChild(container);
+  for(let i = 0; i < 40; i++){
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDelay = Math.random() * 0.5 + 's';
+    p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    container.appendChild(p);
+  }
+  setTimeout(() => container.remove(), 3000);
+}
+
+// 💫 Sparkle
+function sparkleOn(tubeId){
+  const tube = document.getElementById('tube' + tubeId);
+  if(!tube) return;
+  tube.classList.add('pulse');
+  for(let i = 0; i < 6; i++){
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = (30 + Math.random() * 40) + '%';
+    s.style.top = (30 + Math.random() * 40) + '%';
+    s.style.animationDelay = (i * 0.06) + 's';
+    tube.appendChild(s);
+    setTimeout(() => s.remove(), 1200);
+  }
+  setTimeout(() => tube.classList.remove('pulse'), 700);
+}
+
+// ═══════════════ البيانات ═══════════════
+const D=['لا نتيجة مميزة'];
 const W='#f4f4f4';
+const ORANGE='#e8862a';
 const A={
-co3:{n:'Carbonate CO₃²⁻',g:'A',gas:'co2',t:{hcl:['غاز عديم اللون والرائحة + فوران',,,1],mgc:['راسب أبيض على البارد',,W],mgh:['راسب أبيض (ظهر من البارد)',,W]}},
-hco3:{n:'Bicarbonate HCO₃⁻',g:'A',gas:'co2',t:{hcl:['غاز عديم اللون والرائحة + فوران',,,1],mgc:['لا راسب على البارد'],mgh:['راسب أبيض عند الغليان',,W]}},
+co3:{n:'Carbonate CO₃²⁻',g:'A',gas:'co2',t:{hcl:['فوران + غاز عديم اللون والرائحة (CO₂)',,,1],mgc:['راسب أبيض على البارد',,W]}},
+hco3:{n:'Bicarbonate HCO₃⁻',g:'A',gas:'co2',t:{
+  hcl:['فوران + غاز عديم اللون والرائحة (CO₂)',,,1],
+  mgc:['لا راسب على البارد'],
+  mgh:['راسب أبيض بعد التسخين',,W]
+}},
 so3:{n:'Sulfite SO₃²⁻',g:'A',gas:'so2',t:{hcl:['غاز عديم اللون رائحته خانقة (SO₂)',,,1],fe:['لون بني محمر','#a3401f']}},
 s2o3:{n:'Thiosulfate S₂O₃²⁻',g:'A',gas:'so2',t:{hcl:['غاز عديم اللون رائحته خانقة (SO₂)',,,1],fe:['لون بنفسجي','#7a3fb5']}},
 no2:{n:'Nitrite NO₂⁻',g:'A',gas:'no',t:{hcl:['غاز عديم اللون يتبعه غاز بني (NO + NO₂)',,,1],ki:['ظهور لون بني','#8a5a22'],starch:['لون أزرق غامق','#10205a']}},
-cl:{n:'Chloride Cl⁻',g:'B',gas:null,t:{hcl:NR,h2so4:['غاز عديم اللون رائحته نفّاذة (HCl)',,,1],pb:['راسب أبيض يذوب بالتسخين ويرسب تاني بالتبريد',,W]}},
-so4:{n:'Sulphate SO₄²⁻',g:'C',gas:null,t:{hcl:NR,h2so4:['لا غاز'],bacl:['راسب أبيض',,W],fe:['لا راسب (لون أصفر باهت)','#e9e3a8']}},
-po4:{n:'Phosphate PO₄³⁻',g:'C',gas:null,t:{hcl:NR,h2so4:['لا غاز'],bacl:['راسب أبيض',,W],fe:['راسب أصفر باهت أو أبيض','#e9e3a8','#eee9b8']}}
+cl:{n:'Chloride Cl⁻',g:'B',gas:null,t:{hcl:['لا يوجد فوران ولا غاز متصاعد'],h2so4:['فوران + غاز عديم اللون رائحته نفّاذة (HCl)',,,1],pb:['راسب أبيض يذوب بالتسخين ويرسب تاني بالتبريد',,W]}},
+so4:{n:'Sulphate SO₄²⁻',g:'C',gas:null,t:{hcl:['لا يوجد فوران ولا غاز متصاعد'],h2so4:['لا فوران ولا غاز'],bacl:['راسب أبيض',,W],fe:['لا راسب (لون أصفر باهت)','#e9e3a8']}},
+po4:{n:'Phosphate PO₄³⁻',g:'C',gas:null,t:{hcl:['لا يوجد فوران ولا غاز متصاعد'],h2so4:['لا فوران ولا غاز'],bacl:['راسب أبيض',,W],fe:['راسب أصفر باهت أو أبيض','#e9e3a8','#eee9b8']}}
 };
 
-// تسميات الأزرار
-const S1={hcl:'ملح + HCl مخفف',h2so4:'ملح + H₂SO₄ مركز + تسخين'};
-const S1G={lime:'ماء الجير',dich:'K₂Cr₂O₇ محمّض',nh4:'NH₄OH (أبخرة بيضاء؟)'};
-const S2={bacl:'BaCl₂',mgc:'MgSO₄ (على البارد)',mgh:'MgSO₄ (بالغليان)',fe:'FeCl₃',ki:'KI + حمض خليك مخفف',starch:'نشا (بعد KI)',pb:'خلات الرصاص'};
+const S1={hcl:'ملح + HCl مخفف',h2so4:'ملح + H₂SO₄ مركز'};
+const S1G={dich:'K₂Cr₂O₇ محمّض'};
+const CONF={
+ bacl:'BaCl₂',mgc:'MgSO₄',fe:'FeCl₃',pb:'خلات الرصاص',
+ ki:'KI + حمض خليك',starch:'نشا (بعد KI)',agn:'AgNO₃',
+ hcl:'HCl مخفف',h2so4:'H₂SO₄ مخفف'
+};
+
+let bag = [];
+let lastFromBag = null;
+
+function refillBag() {
+  bag = Object.keys(A);
+  for (let i = bag.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [bag[i], bag[j]] = [bag[j], bag[i]];
+  }
+  if (bag[0] === lastFromBag && bag.length > 1) {
+    [bag[0], bag[1]] = [bag[1], bag[0]];
+  }
+}
+
+function pickFromBag() {
+  if (bag.length === 0) refillBag();
+  const k = bag.pop();
+  lastFromBag = k;
+  return k;
+}
 
 let cur=null,gas=null,did=new Set();
-let stage=1; // 1=HCl, 2=Gas test or H2SO4, 3=Dich test, 4=Solution tests
-let sawBubbles=false;    // هل حصل فوران في HCl؟
-let dichGreen=false;     // هل K2Cr2O7 اتحول أخضر؟
-let fromGroupA=false;    // خرج من المرحلة 1 كـ A؟
+let sawBubbles=false,dichGreen=false,fromGroupA=false;
+let groupDecided=null,gasType=null,mgcTested=false;
 
 const $=id=>document.getElementById(id);
 const btns=(o,f)=>Object.keys(o).map(k=>`<button onclick="${f}('${k}')">${o[k]}</button>`).join('');
 
 $('mode').innerHTML='<option value="rand">مجهول عشوائي</option>'+Object.keys(A).map(k=>`<option value="${k}">${A[k].n}</option>`).join('');
 $('s1g').innerHTML=btns(S1G,'gt');
-$('s2').innerHTML=btns(S2,'add');
+$('cA').innerHTML=btns(CONF,'confA');
+$('cB').innerHTML=btns(CONF,'confB');
+$('cC').innerHTML=btns(CONF,'confC');
+$('s2').innerHTML=btns(CONF,'add');
 $('an').innerHTML=Object.keys(A).map(k=>`<button onclick="ans('${k}')">${A[k].n}</button>`).join('');
 
 function unlock(id){$(id).classList.remove('locked')}
 function lock(id){$(id).classList.add('locked')}
-function showStep(id,html){const el=$(id);el.style.display='block';el.innerHTML=html}
 
-function show(name,r){
- $('obs').textContent=r[0]+(r[3]?' 💨':'');
- if(r[1])$('liq').style.background=r[1];else $('liq').style.background='rgba(120,180,255,.3)';
- if(r[2]){$('ppt').style.background=r[2];$('ppt').style.height='18%';}
- else{$('ppt').style.background='transparent';$('ppt').style.height='0';}
- const l=$('log');if(l.querySelector('.m'))l.innerHTML='';
- const d=document.createElement('div');d.innerHTML='<b>'+name+':</b> '+r[0];l.appendChild(d);
+function typeText(el, text, speed = 12){
+  if(el._timer) clearInterval(el._timer);
+  el.textContent = '';
+  let i = 0;
+  el._timer = setInterval(() => {
+    if(i >= text.length){ clearInterval(el._timer); return; }
+    el.textContent += text.charAt(i++);
+  }, speed);
+}
+
+function displayTube(tubeId, obsId, name, r, defaultColor){
+  const fullText = name + ': ' + r[0];
+  typeText($('obs'+obsId), fullText, 12);
+  if(r[1]) $('liq'+tubeId).style.background = r[1];
+  else $('liq'+tubeId).style.background = defaultColor;
+  if(r[2]){
+    $('ppt'+tubeId).style.background = r[2];
+    $('ppt'+tubeId).style.height = '18%';
+  } else {
+    $('ppt'+tubeId).style.background = 'transparent';
+    $('ppt'+tubeId).style.height = '0';
+  }
+  sparkleOn(tubeId);
+  if(r[3]){
+    playBubble();
+    const liq = $('liq'+tubeId);
+    liq.classList.add('bubbling');
+    setTimeout(() => liq.classList.remove('bubbling'), 1500);
+  }
+  const l=$('log');if(l.querySelector('.m'))l.innerHTML='';
+  const d=document.createElement('div');d.innerHTML='<b>'+name+':</b> '+r[0];l.appendChild(d);
+}
+
+function resetTube(tubeId, obsId, defaultText, defaultColor){
+  $('obs'+obsId).textContent = defaultText;
+  $('liq'+tubeId).style.background = defaultColor;
+  $('ppt'+tubeId).style.height = '0';
+  $('ppt'+tubeId).style.background = 'transparent';
 }
 
 function start(){
- const m=$('mode').value,ks=Object.keys(A);
- cur=m==='rand'?ks[Math.floor(Math.random()*ks.length)]:m;
- gas=null;did=new Set();stage=1;sawBubbles=false;dichGreen=false;fromGroupA=false;
+ const m=$('mode').value;
+ if(m==='rand'){ cur = pickFromBag(); }
+ else { cur = m; bag = []; lastFromBag = null; }
+
+ gas=null;did=new Set();sawBubbles=false;dichGreen=false;fromGroupA=false;
+ groupDecided=null;gasType=null;mgcTested=false;
  $('log').innerHTML='<span class="m">فاضي</span>';$('res').innerHTML='';$('grp').value='';
- $('obs').textContent='اضغط على اختبار…';
- $('liq').style.background='';$('ppt').style.height='0';$('ppt').style.background='transparent';
- // إعادة التهيئة
+
+ resetTube('1','1','اضغط على اختبار…','rgba(120,180,255,.25)');
+ resetTube('2','2','محلول الملح — أضف كاشفاً…','rgba(120,180,255,.15)');
+ resetTube('3','3','محلول الملح — أضف كاشفاً…','rgba(120,180,255,.15)');
+ resetTube('4','4','محلول الملح — أضف كاشفاً…','rgba(120,180,255,.15)');
+ resetTube('5','5','محلول الملح — أضف كاشفاً…','rgba(120,180,255,.15)');
+ resetTube('6','6','ملح صلب — أضف H₂SO₄…','rgba(120,180,255,.25)');
+ resetTube('7','7','ملح صلب — أضف H₂SO₄…','rgba(120,180,255,.25)');
+
  $('btn_hcl').disabled=false;
- $('msg1').style.display='none';
  unlock('stage1');
- lock('stageGas');lock('stage2');lock('stageDich');lock('stage3');
+ ['stageGas','confirmA','stageHeat','stage2','confirmB','stage3','confirmC'].forEach(lock);
+ lock('tubeBar6'); lock('tubeBar7');
  $('answerBox').style.display='none';
 }
 
 function add(k){
  if(!cur)start();
- if(k==='starch'&&!did.has('ki')){$('obs').textContent='أضف KI + حمض الخليك الأول.';return}
- if(k==='h2so4'&&stage===1){$('obs').textContent='لازم تعمل تفاعل HCl الأول.';return}
+ if(k==='starch'&&!did.has('ki'))return;
+ if(k==='h2so4'&&!did.has('hcl'))return;
 
- // منع استخدام H2SO4 قبل HCl
  let r=A[cur].t[k]||D;
-
- // تسجيل الغاز المتصاعد
  if(k==='hcl'||k==='h2so4'){if(r[3])gas=k;}
 
- // === منطق HCl (المرحلة 1) ===
  if(k==='hcl'){
    did.add('hcl');
-   show(S1.hcl,r);
+   displayTube('1','1', S1.hcl, r, 'rgba(120,180,255,.25)');
    $('btn_hcl').disabled=true;
-
-   if(r[3]){
-     // فيه فوران → جروب A
-     sawBubbles=true;
-     fromGroupA=true;
-     showStep('msg1','✅ <b>يوجد فوران/غاز متصاعد</b> → <b>الجروب A</b><br>اختبر الغاز المتصاعد في الأسفل.');
-     unlock('stageGas');
-     $('answerBox').style.display='block';
-     // جروب A مش محتاج مرحلته 2 (H2SO4)
-     $('grp').value='A';
+   gasType = A[cur].gas;
+   if(gasType==='co2' || gasType==='no'){
+     sawBubbles=true; fromGroupA=true; groupDecided='A';
+     unlock('confirmA'); $('answerBox').style.display='block';
    } else {
-     // مفيش فوران → نروح للمرحلة 2 (H2SO4)
-     sawBubbles=false;
-     showStep('msg1','❌ <b>لا فوران</b> → مش جروب A<br>اضغط على زر H₂SO₄ المركز في الأسفل للانتقال.');
-     unlock('stage2');
+     sawBubbles = (gasType==='so2');
+     unlock('stageGas'); $('answerBox').style.display='block';
    }
    return;
  }
 
- // === منطق H2SO4 (المرحلة 2) ===
  if(k==='h2so4'){
    did.add('h2so4');
-   show(S1.h2so4,r);
+   displayTube('6','6', S1.h2so4, r, 'rgba(120,180,255,.25)');
+   displayTube('7','7', S1.h2so4, r, 'rgba(120,180,255,.25)');
    lock('stage2');
-   unlock('stageDich');
-   if(r[3]){
-     showStep('msg1','💨 <b>يوجد غاز متصاعد</b> من H₂SO₄ → اختبر بـ K₂Cr₂O₇ للتفريق بين جروب A و B.');
-   } else {
-     showStep('msg1','❌ لا غاز من H₂SO₄ → على الأغلب من جروب C. (لكن اختبار K₂Cr₂O₇ هيعطينا تأكيد)');
-   }
+   if(r[3]){ groupDecided='B'; unlock('confirmB'); }
+   else { groupDecided='C'; unlock('stage3'); }
+   $('answerBox').style.display='block';
    return;
  }
 
- // === اختبارات المحلول (المرحلة 4) ===
- if(['bacl','mgc','mgh','fe','ki','starch','pb'].includes(k)){
-   if(stage<4){$('obs').textContent='لازم تخلّص المرحلة 1 واختبار K₂Cr₂O₇ الأول.';return}
+ if(['bacl','mgc','fe','ki','starch','pb','agn'].includes(k)){
+   if($('stage3').classList.contains('locked'))return;
    did.add(k);
-   show(S2[k],r);
-   if(k==='bacl'||k==='pb'){
-     $('answerBox').style.display='block';
-   }
+   displayTube('4','4', 'محلول ملح + '+CONF[k], r, 'rgba(120,180,255,.15)');
+   if(k==='bacl'){ unlock('confirmC'); }
    return;
  }
 }
@@ -211,69 +1036,198 @@ function add(k){
 function gt(k){
  if(!cur)start();
  const a=A[cur];let r;
-
- // === اختبار K2Cr2O7 ===
  if(k==='dich'){
-   if(stage<3){$('obs').textContent='لازم تعمل اختبار HCl ثم H₂SO₄ الأول.';return}
-   // نحدد نوع الغاز
-   const gtype=(gas==='h2so4')?'hcl':a.gas;
-
-   if(gtype==='so2'){
-     // سلفيت/ثيوسلفيت → أخضر
-     r=(cur==='so3')?['الورقة تتحول لأخضر غامق ✅','#1d5a2e']:['الورقة تتحول لأخضر مصفر ✅','#8aa63a'];
-     dichGreen=true;
-     fromGroupA=true;
-     show(S1G.dich,r);
-     showStep('msg1','🟢 <b>K₂Cr₂O₇ تحول للأخضر → الجروب A مؤكد</b> (سلفيت/ثيوسلفيت)<br>اختبر الغاز بماء الجير للتأكيد، واختبر محلول الملح في المرحلة 3.');
-     unlock('stage3');
+   if(a.gas==='so2'){
+     r=(cur==='so3')?['الورقة تتحول لأخضر غامق','#1d5a2e']:['الورقة تتحول لأخضر مصفر','#8aa63a'];
+     dichGreen=true; fromGroupA=true; groupDecided='A';
+     unlock('confirmA');
+     displayTube('1','1', S1G.dich, r, 'rgba(120,180,255,.25)');
      $('answerBox').style.display='block';
-     $('grp').value='A';
-   } else if(gtype==='hcl'){
-     // كلوريد → H2SO4 يطلع HCl، مش هيتفاعل مع K2Cr2O7
-     r=['لا يتغير لون K₂Cr₂O₇ (الغاز HCl)','#c97b1a'];
-     dichGreen=false;
-     show(S1G.dich,r);
-     showStep('msg1','🟠 <b>K₂Cr₂O₇ لم يتحول للأخضر → الجروب B</b> (الغاز HCl)<br>اختبر محلول الملح بخلات الرصاص.');
-     unlock('stage3');
-     $('answerBox').style.display='block';
-     $('grp').value='B';
    } else {
-     // مفيش غاز (سلفات/فوسفات) → جروب C
-     r=['لا يتغير لون K₂Cr₂O₇ (لا يوجد غاز)','#c97b1a'];
+     r=['الورقة تبقى برتقالية (لا يتغير اللون)', ORANGE];
      dichGreen=false;
-     show(S1G.dich,r);
-     showStep('msg1','🔵 <b>لا يوجد غاز → الجروب C محتمل</b><br>اختبر محلول الملح بـ BaCl₂ للتأكيد.');
-     unlock('stage3');
-     $('answerBox').style.display='block';
-     $('grp').value='C';
+     displayTube('1','1', S1G.dich, r, 'rgba(120,180,255,.25)');
+     unlock('tubeBar6'); unlock('tubeBar7');
+     unlock('stage2');
    }
-   stage=4;
    return;
  }
+}
 
- // === اختبارات الغاز الأخرى ===
- if(!gas){$('obs').textContent='مفيش غاز متصاعد تختبره — اعمل خطوة الملح الصلب الأول.';return}
- const gtype=gas==='h2so4'?'hcl':a.gas;
+function confA(k){
+ if(!cur)start();
+ if(!fromGroupA)return;
+ const r=A[cur].t[k];
+ displayTube('2','2', 'محلول ملح + '+CONF[k], r?r:['لا تغيير'], 'rgba(120,180,255,.15)');
+ if(r){
+   $('answerBox').style.display='block';
+   if(k==='mgc'){
+     mgcTested=true;
+     if(r[0].indexOf('لا راسب')!==-1){ unlock('stageHeat'); }
+   }
+ }
+}
 
- if(k==='lime'){r=gtype==='co2'?['ماء الجير بيتعكّر (لبني) ← CO₂','#e8e8e8']:D}
- else if(k==='nh4'){r=gtype==='hcl'?['أبخرة بيضاء (NH₄Cl)','#f2f2f2']:D}
+function heat(){
+ if(!cur)start();
+ if(!mgcTested)return;
+ let r;
+ if(A[cur].t && A[cur].t.mgh){
+   r = A[cur].t.mgh;
+ } else {
+   r = ['لا تغيير بعد التسخين'];
+ }
+ displayTube('2','2', 'تسخين المحلول', r, 'rgba(120,180,255,.15)');
+ $('answerBox').style.display='block';
+}
 
- show(S1G[k],r);
+function confB(k){
+ if(!cur)start();
+ if(groupDecided!=='B')return;
+ const r=A[cur].t[k];
+ displayTube('3','3', 'محلول ملح + '+CONF[k], r?r:['لا تغيير'], 'rgba(120,180,255,.15)');
+ if(r)$('answerBox').style.display='block';
+}
+
+function confC(k){
+ if(!cur)start();
+ if(groupDecided!=='C')return;
+ const r=A[cur].t[k];
+ displayTube('5','5', 'محلول ملح + '+CONF[k], r?r:['لا تغيير'], 'rgba(120,180,255,.15)');
+ if(r)$('answerBox').style.display='block';
 }
 
 function ans(k){
  if(!cur){$('res').innerHTML='<span class="m">ابدأ مجهول الأول.</span>';return}
  const g=$('grp').value;
  if(!g){$('res').innerHTML='<span class="m">اختر المجموعة الأول.</span>';return}
-
- // تحقق من منطق المجموعة
- if(g==='A'&&!fromGroupA){$('res').innerHTML='<span class="no">✘ الجروب A لازم يكون فيه فوران/غاز في المرحلة 1 أو لون أخضر مع K₂Cr₂O₇</span>';return}
- if(g==='B'&&!(gas==='h2so4'&&!dichGreen)){$('res').innerHTML='<span class="no">✘ الجروب B لازم يطلع غاز HCl مع H₂SO₄ ولا يتحول K₂Cr₂O₇ للأخضر</span>';return}
-
  const gOk=g===A[cur].g;
- $('res').innerHTML=(k===cur&&gOk)?'<span class="ok">✔ صح! '+A[cur].n+' (مجموعة '+A[cur].g+')</span>':'<span class="no">✘ '+(gOk?'المجموعة صح بس الأنيون غلط':'المجموعة غلط')+'، راجع الشيت.</span>';
+ if(k===cur && gOk){
+   $('res').innerHTML='<span class="ok">✔ صح! '+A[cur].n+' (مجموعة '+A[cur].g+')</span>';
+   playSuccess();
+   celebrate();
+ } else {
+   $('res').innerHTML='<span class="no">✘ '+(gOk?'المجموعة صح بس الأنيون غلط':'المجموعة غلط')+'، راجع الشيت.</span>';
+   playError();
+   const box = $('res').closest('.c');
+   if(box){
+     box.style.animation = 'none';
+     setTimeout(() => {
+       box.style.animation = 'shake .4s ease';
+     }, 10);
+   }
+ }
 }
 
-// بدء تلقائي
-window.onload=()=>start();
+const style = document.createElement('style');
+style.textContent = `
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+`;
+document.head.appendChild(style);
+
+// ═══════════════════════════════════════════════════════════
+// 🌓 زرّي الوضع: نهاري + ليلي — بسيط جداً
+// ═══════════════════════════════════════════════════════════
+
+// 🔑 مفتاح التخزين
+var ARL_THEME_KEY = 'arl_theme_simple';
+
+// 🎨 تطبيق الوضع
+function arlSetTheme(theme){
+  if(theme === 'dark'){
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+
+  // تحديث حالة الأزرار (يظهر إطار على الزر النشط)
+  var lightBtn = document.getElementById('themeLight');
+  var darkBtn = document.getElementById('themeDark');
+  if(lightBtn && darkBtn){
+    if(theme === 'dark'){
+      darkBtn.classList.add('active');
+      lightBtn.classList.remove('active');
+    } else {
+      lightBtn.classList.add('active');
+      darkBtn.classList.remove('active');
+    }
+  }
+
+  // حفظ الاختيار
+  try{ localStorage.setItem(ARL_THEME_KEY, theme); }catch(e){}
+
+  // إعادة بناء النجوم
+  setTimeout(rebuildStars, 50);
+}
+
+// 🌟 إعادة بناء النجوم بعد تغيير الوضع
+function rebuildStars(){
+  var container = document.getElementById('starsContainer');
+  if(!container) return;
+  container.innerHTML = '';
+  var count = window.innerWidth < 480 ? 50 : 100;
+  for(var i = 0; i < count; i++){
+    var s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDuration = (2 + Math.random() * 4) + 's';
+    s.style.animationDelay = (Math.random() * 5) + 's';
+    var size = (Math.random() * 2 + 1);
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    container.appendChild(s);
+  }
+}
+
+// 🚀 تهيئة أزرار الوضع — بعد ما الصفحة تخلص تحميل
+function arlInitThemeButtons(){
+  var lightBtn = document.getElementById('themeLight');
+  var darkBtn = document.getElementById('themeDark');
+
+  if(!lightBtn || !darkBtn) return;
+
+  // استرجاع الوضع المحفوظ
+  var saved = 'light';
+  try{ saved = localStorage.getItem(ARL_THEME_KEY) || 'light'; }catch(e){}
+  arlSetTheme(saved);
+
+  // زر النهاري
+  lightBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    arlSetTheme('light');
+    if(typeof playClick === 'function') playClick();
+  });
+
+  // زر الليلي
+  darkBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    arlSetTheme('dark');
+    if(typeof playClick === 'function') playClick();
+  });
+}
+
+// التنفيذ
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', arlInitThemeButtons);
+} else {
+  arlInitThemeButtons();
+}
+
+// ═══════════════════════════════════════════════════════════
+// بدء التطبيق
+// ═══════════════════════════════════════════════════════════
+refillBag();
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', start);
+} else {
+  start();
+}
 </script></body></html>
