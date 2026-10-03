@@ -31,7 +31,6 @@
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
-/* ✅ الوضع الفاتح — افتراضي */
 :root, :root[data-theme="light"]{
   --bg:#f4f6fa;
   --bg-soft:#eaeef5;
@@ -57,7 +56,6 @@
   --shadow-md:0 4px 12px rgba(15,23,42,.08),0 2px 4px rgba(15,23,42,.04);
   --shadow-lg:0 10px 25px rgba(15,23,42,.1),0 4px 8px rgba(15,23,42,.04);
 }
-/* ✅ الوضع الليلي */
 :root[data-theme="dark"]{
   --bg:#0b1120;
   --bg-soft:#111827;
@@ -102,7 +100,6 @@ body{
   min-height:100vh;
 }
 
-/* 🌌 الخلفية العالمية */
 .cosmic-bg{
   position:fixed;
   inset:0;
@@ -161,7 +158,169 @@ body{
   100%{transform:translateY(-10vh) scale(1);opacity:0}
 }
 
-/* الهيدر */
+/* 🔒 شاشة القفل */
+#lockScreen{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:var(--bg);
+  transition:opacity .4s ease, visibility .4s ease;
+}
+#lockScreen.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.lock-card{
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:20px;
+  padding:32px 24px;
+  max-width:400px;
+  width:100%;
+  box-shadow:var(--shadow-lg);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.lock-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,transparent,var(--ac),transparent);
+  opacity:.7;
+  background-size:200% 100%;
+  animation:slideGradient 4s linear infinite;
+}
+@keyframes slideGradient{
+  0%{background-position:-100% 0}
+  100%{background-position:100% 0}
+}
+.lock-icon{
+  font-size:52px;
+  margin-bottom:8px;
+  display:block;
+}
+.lock-univ{
+  font-size:10px;
+  font-weight:600;
+  color:var(--mut);
+  letter-spacing:2px;
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
+.lock-title{
+  font-size:20px;
+  font-weight:700;
+  margin:0 0 4px;
+  color:var(--tx);
+  letter-spacing:-.02em;
+}
+.lock-sub{
+  font-size:13px;
+  color:var(--mut);
+  margin:0 0 22px;
+  line-height:1.5;
+}
+#lockPassword{
+  width:100%;
+  padding:13px 16px;
+  font-size:16px;
+  font-family:inherit;
+  color:var(--tx);
+  background:var(--bg-soft);
+  border:2px solid var(--bd);
+  border-radius:11px;
+  outline:none;
+  text-align:center;
+  letter-spacing:.15em;
+  transition:border-color .2s ease,background-color .2s ease;
+  box-sizing:border-box;
+}
+#lockPassword:focus{
+  border-color:var(--ac);
+  background:var(--card);
+}
+#lockPassword::placeholder{
+  letter-spacing:normal;
+  color:var(--mut);
+}
+#lockBtn{
+  width:100%;
+  margin-top:14px;
+  padding:13px 16px;
+  font-size:15px;
+  font-weight:600;
+  color:#fff;
+  background:var(--ac);
+  border:none;
+  border-radius:11px;
+  cursor:pointer;
+  transition:background-color .15s ease,transform .1s ease;
+  font-family:inherit;
+}
+#lockBtn:hover{background:var(--ac-dark)}
+#lockBtn:active{transform:scale(.98)}
+#lockBtn:disabled{opacity:.6;cursor:wait}
+#lockError{
+  margin-top:12px;
+  font-size:13px;
+  color:var(--danger);
+  font-weight:600;
+  min-height:18px;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+#lockError.show{opacity:1}
+.lock-shake{animation:lockShake .4s ease}
+@keyframes lockShake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-6px)}
+  80%{transform:translateX(6px)}
+}
+
+/* 🚪 زر الخروج */
+.logout-btn{
+  position:fixed;
+  top:16px;
+  right:16px;
+  z-index:100;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--card);
+  border:1px solid var(--bd);
+  box-shadow:var(--shadow-md);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  padding:0;
+  margin:0;
+  transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease;
+}
+.logout-btn:hover{
+  transform:scale(1.1);
+  box-shadow:var(--shadow-lg);
+  background:rgba(220,38,38,.1);
+  border-color:var(--danger);
+}
+.logout-btn:active{transform:scale(.95)}
+@media (max-width:480px){
+  .logout-btn{top:10px;right:10px;width:38px;height:38px;font-size:16px}
+}
+
+#mainApp{transition:opacity .3s ease}
+#mainApp.hidden{display:none}
+
 .header{
   text-align:center;
   margin:4px 0 20px;
@@ -183,10 +342,6 @@ body{
   background-size:200% 100%;
   animation:slideGradient 4s linear infinite;
 }
-@keyframes slideGradient{
-  0%{background-position:-100% 0}
-  100%{background-position:100% 0}
-}
 .header .univ{
   font-size:11px;
   font-weight:600;
@@ -204,7 +359,6 @@ body{
   line-height:1.2;
 }
 
-/* الكروت */
 .c{
   background:var(--card);
   border:1px solid var(--bd);
@@ -219,7 +373,6 @@ body{
   border-color:var(--bd-strong);
 }
 
-/* شريط الأنبوبة */
 .tube-bar{
   background:var(--card);
   border:1px solid var(--bd);
@@ -263,7 +416,6 @@ body{
   color:var(--tx-soft);
 }
 
-/* الأنبوبة */
 .tube{
   width:52px;
   height:118px;
@@ -345,7 +497,6 @@ body{
   100%{transform:translate(-50%,-200%) scale(2);opacity:0}
 }
 
-/* الأزرار */
 button,select{
   font:inherit;
   font-weight:500;
@@ -487,7 +638,6 @@ h3{
   .tube-row{padding:12px;gap:14px}
 }
 
-/* 🎛️ الأزرار الثابتة (صوت + نهاري + ليلي) */
 .top-controls{
   position:fixed;
   top:16px;
@@ -516,10 +666,7 @@ h3{
   transform:scale(1.1);
   box-shadow:var(--shadow-lg);
 }
-.top-controls button:active{
-  transform:scale(.95);
-}
-/* زر نشط — يظهر الحدود الملونة */
+.top-controls button:active{transform:scale(.95)}
 .top-controls button.active{
   border-color:var(--ac);
   box-shadow:0 0 0 2px var(--ac-soft),var(--shadow-md);
@@ -530,147 +677,290 @@ h3{
 }
 </style></head><body>
 
-<!-- 🌌 الخلفية العالمية -->
+<!-- 🌌 الخلفية -->
 <div class="cosmic-bg"></div>
 <div class="stars" id="starsContainer"></div>
-
-<!-- 🌊 الخلفية المتحركة -->
 <div class="bg-animation" id="bgAnimation"></div>
 
-<!-- 🎛️ الأزرار الثابتة: صوت + نهاري + ليلي -->
-<div class="top-controls">
-  <button type="button" id="soundToggle" title="كتم/تشغيل الصوت">🔊</button>
-  <button type="button" id="themeLight" title="الوضع النهاري">☀️</button>
-  <button type="button" id="themeDark" title="الوضع الليلي">🌙</button>
-</div>
+<!-- 🔒 شاشة القفل -->
+<div id="lockScreen">
+  <div class="lock-card" id="lockCard">
+    <span class="lock-icon">🔒</span>
+    <div class="lock-univ">Alamein International University</div>
+    <h2 class="lock-title">Acidic Radicals Lab</h2>
+    <p class="lock-sub">هذا الموقع خاص بجامعة العلمين الدولية<br>الرجاء إدخال كلمة المرور للدخول</p>
 
-<!-- ═══════════ الهيدر ═══════════ -->
-<div class="header">
-  <div class="univ">Alamein International University</div>
-  <h1>Acidic Radicals Lab</h1>
-</div>
+    <input type="password" id="lockPassword" placeholder="كلمة المرور" autocomplete="off" />
 
-<!-- ═══════════ بطاقة البدء ═══════════ -->
-<div class="c">
-<div class="m">حسب شيت المعمل (إشراف أ.د. السيد الأشطوخي). الأنبوبة فيها ملح مجهول، اتبع الخطوات بالترتيب لاكتشاف الأنيون.</div>
-<div style="margin-top:12px">
-<select id="mode"></select><button onclick="start()">ابدأ / مجهول جديد</button>
-</div>
-</div>
+    <button type="button" id="lockBtn">دخول</button>
 
-<!-- ═══════════ الأنبوبة 1 ═══════════ -->
-<div class="tube-bar">
-  <div class="tube-wrap">
-    <div class="tube" id="tube1"><div class="liq" id="liq1"></div><div class="ppt" id="ppt1"></div></div>
+    <div id="lockError">❌ كلمة المرور غير صحيحة</div>
   </div>
-  <div class="tube-obs" id="obs1">اضغط على اختبار…</div>
 </div>
 
-<!-- ═══════════ المرحلة 1 ═══════════ -->
-<div class="c" id="stage1">
-<h3>🔒 المرحلة 1: ملح + HCl مخفف</h3>
-<div class="g"><button id="btn_hcl" onclick="add('hcl')">أضف HCl مخفف</button></div>
-</div>
+<!-- المحتوى الرئيسي -->
+<div id="mainApp" class="hidden">
 
-<!-- ═══════════ اختبار الغاز ═══════════ -->
-<div class="c locked" id="stageGas">
-<h3>💨 اختبار الغاز المتصاعد</h3>
-<div class="g" id="s1g"></div>
-</div>
-
-<!-- ═══════════ تأكيد A ═══════════ -->
-<div class="c locked" id="confirmA">
-<h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
-<div class="tube-row">
-  <div class="tube-wrap">
-    <div class="tube" id="tube2"><div class="liq" id="liq2" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt2"></div></div>
+  <div class="top-controls">
+    <button type="button" id="soundToggle" title="كتم/تشغيل الصوت">🔊</button>
+    <button type="button" id="themeLight" title="الوضع النهاري">☀️</button>
+    <button type="button" id="themeDark" title="الوضع الليلي">🌙</button>
   </div>
-  <div class="sol-obs" id="obs2">محلول الملح — أضف كاشفاً…</div>
-</div>
-<div class="g" id="cA"></div>
-</div>
 
-<!-- ═══════════ التسخين ═══════════ -->
-<div class="c locked" id="stageHeat">
-<h3>🔥 تسخين</h3>
-<div class="g"><button onclick="heat()">سخّن المحلول</button></div>
-</div>
+  <button type="button" class="logout-btn" id="logoutBtn" title="خروج">🚪</button>
 
-<!-- ═══════════ الأنبوبة 6 ═══════════ -->
-<div class="tube-bar locked" id="tubeBar6">
-  <div class="tube-wrap">
-    <div class="tube" id="tube6"><div class="liq" id="liq6" style="background:rgba(120,180,255,.25)"></div><div class="ppt" id="ppt6"></div></div>
+  <div class="header">
+    <div class="univ">Alamein International University</div>
+    <h1>Acidic Radicals Lab</h1>
   </div>
-  <div class="tube-obs" id="obs6">ملح صلب — أضف H₂SO₄…</div>
-</div>
 
-<!-- ═══════════ المرحلة 2 ═══════════ -->
-<div class="c locked" id="stage2">
-<h3>🔒 المرحلة 2: ملح + H₂SO₄ مركز</h3>
-<div class="g"><button onclick="add('h2so4')">أضف H₂SO₄ مركز</button></div>
-</div>
-
-<!-- ═══════════ تأكيد B ═══════════ -->
-<div class="c locked" id="confirmB">
-<h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
-<div class="tube-row">
-  <div class="tube-wrap">
-    <div class="tube" id="tube3"><div class="liq" id="liq3" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt3"></div></div>
+  <div class="c">
+    <div class="m">حسب شيت المعمل (إشراف أ.د. السيد الأشطوخي). الأنبوبة فيها ملح مجهول، اتبع الخطوات بالترتيب لاكتشاف الأنيون.</div>
+    <div style="margin-top:12px">
+      <select id="mode"></select><button onclick="start()">ابدأ / مجهول جديد</button>
+    </div>
   </div>
-  <div class="sol-obs" id="obs3">محلول الملح — أضف كاشفاً…</div>
-</div>
-<div class="g" id="cB"></div>
-</div>
 
-<!-- ═══════════ الأنبوبة 7 ═══════════ -->
-<div class="tube-bar locked" id="tubeBar7">
-  <div class="tube-wrap">
-    <div class="tube" id="tube7"><div class="liq" id="liq7" style="background:rgba(120,180,255,.25)"></div><div class="ppt" id="ppt7"></div></div>
+  <div class="tube-bar">
+    <div class="tube-wrap">
+      <div class="tube" id="tube1"><div class="liq" id="liq1"></div><div class="ppt" id="ppt1"></div></div>
+    </div>
+    <div class="tube-obs" id="obs1">اضغط على اختبار…</div>
   </div>
-  <div class="tube-obs" id="obs7">ملح صلب — أضف H₂SO₄…</div>
-</div>
 
-<!-- ═══════════ المرحلة 3 ═══════════ -->
-<div class="c locked" id="stage3">
-<h3>🔓 المرحلة 3: اختبارات على محلول الملح (جروب C)</h3>
-<div class="tube-row">
-  <div class="tube-wrap">
-    <div class="tube" id="tube4"><div class="liq" id="liq4" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt4"></div></div>
+  <div class="c" id="stage1">
+    <h3>🔒 المرحلة 1: ملح + HCl مخفف</h3>
+    <div class="g"><button id="btn_hcl" onclick="add('hcl')">أضف HCl مخفف</button></div>
   </div>
-  <div class="sol-obs" id="obs4">محلول الملح — أضف كاشفاً…</div>
-</div>
-<div class="g" id="s2"></div>
-</div>
 
-<!-- ═══════════ تأكيد C ═══════════ -->
-<div class="c locked" id="confirmC">
-<h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
-<div class="tube-row">
-  <div class="tube-wrap">
-    <div class="tube" id="tube5"><div class="liq" id="liq5" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt5"></div></div>
+  <div class="c locked" id="stageGas">
+    <h3>💨 اختبار الغاز المتصاعد</h3>
+    <div class="g" id="s1g"></div>
   </div>
-  <div class="sol-obs" id="obs5">محلول الملح — أضف كاشفاً…</div>
-</div>
-<div class="g" id="cC"></div>
-</div>
 
-<!-- ═══════════ السجل ═══════════ -->
-<div class="c"><h3>📋 سجل الملاحظات</h3><div class="log" id="log"><span class="m">فاضي</span></div></div>
+  <div class="c locked" id="confirmA">
+    <h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
+    <div class="tube-row">
+      <div class="tube-wrap">
+        <div class="tube" id="tube2"><div class="liq" id="liq2" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt2"></div></div>
+      </div>
+      <div class="sol-obs" id="obs2">محلول الملح — أضف كاشفاً…</div>
+    </div>
+    <div class="g" id="cA"></div>
+  </div>
 
-<!-- ═══════════ المرحلة النهائية ═══════════ -->
-<div class="c" id="answerBox" style="display:none">
-<h3>🎯 حدّد المجموعة والأنيون</h3>
-<div style="margin-top:10px"><b>المجموعة:</b>
-<select id="grp"><option value="">اختر</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></div>
-<div style="margin-top:12px"><b>الأنيون:</b></div>
-<div class="g" id="an"></div>
-<div id="res" style="margin-top:12px"></div>
-</div>
+  <div class="c locked" id="stageHeat">
+    <h3>🔥 تسخين</h3>
+    <div class="g"><button onclick="heat()">سخّن المحلول</button></div>
+  </div>
+
+  <div class="tube-bar locked" id="tubeBar6">
+    <div class="tube-wrap">
+      <div class="tube" id="tube6"><div class="liq" id="liq6" style="background:rgba(120,180,255,.25)"></div><div class="ppt" id="ppt6"></div></div>
+    </div>
+    <div class="tube-obs" id="obs6">ملح صلب — أضف H₂SO₄…</div>
+  </div>
+
+  <div class="c locked" id="stage2">
+    <h3>🔒 المرحلة 2: ملح + H₂SO₄ مركز</h3>
+    <div class="g"><button onclick="add('h2so4')">أضف H₂SO₄ مركز</button></div>
+  </div>
+
+  <div class="c locked" id="confirmB">
+    <h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
+    <div class="tube-row">
+      <div class="tube-wrap">
+        <div class="tube" id="tube3"><div class="liq" id="liq3" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt3"></div></div>
+      </div>
+      <div class="sol-obs" id="obs3">محلول الملح — أضف كاشفاً…</div>
+    </div>
+    <div class="g" id="cB"></div>
+  </div>
+
+  <div class="tube-bar locked" id="tubeBar7">
+    <div class="tube-wrap">
+      <div class="tube" id="tube7"><div class="liq" id="liq7" style="background:rgba(120,180,255,.25)"></div><div class="ppt" id="ppt7"></div></div>
+    </div>
+    <div class="tube-obs" id="obs7">ملح صلب — أضف H₂SO₄…</div>
+  </div>
+
+  <div class="c locked" id="stage3">
+    <h3>🔓 المرحلة 3: اختبارات على محلول الملح (جروب C)</h3>
+    <div class="tube-row">
+      <div class="tube-wrap">
+        <div class="tube" id="tube4"><div class="liq" id="liq4" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt4"></div></div>
+      </div>
+      <div class="sol-obs" id="obs4">محلول الملح — أضف كاشفاً…</div>
+    </div>
+    <div class="g" id="s2"></div>
+  </div>
+
+  <div class="c locked" id="confirmC">
+    <h3>🔍 تأكيد الأنيون — على محلول الملح</h3>
+    <div class="tube-row">
+      <div class="tube-wrap">
+        <div class="tube" id="tube5"><div class="liq" id="liq5" style="background:rgba(120,180,255,.15)"></div><div class="ppt" id="ppt5"></div></div>
+      </div>
+      <div class="sol-obs" id="obs5">محلول الملح — أضف كاشفاً…</div>
+    </div>
+    <div class="g" id="cC"></div>
+  </div>
+
+  <div class="c"><h3>📋 سجل الملاحظات</h3><div class="log" id="log"><span class="m">فاضي</span></div></div>
+
+  <div class="c" id="answerBox" style="display:none">
+    <h3>🎯 حدّد المجموعة والأنيون</h3>
+    <div style="margin-top:10px"><b>المجموعة:</b>
+      <select id="grp"><option value="">اختر</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></div>
+    <div style="margin-top:12px"><b>الأنيون:</b></div>
+    <div class="g" id="an"></div>
+    <div id="res" style="margin-top:12px"></div>
+  </div>
+
+</div><!-- /#mainApp -->
 
 <script>
-/* ═══════════ الجزء الأصلي — لم يُلمس ═══════════ */
+/* ═══════════════════════════════════════════════════════════
+   🔐 نظام القفل — يقرأ كلمة السر من ملف password.json
+   ═══════════════════════════════════════════════════════════ */
 
-// ✨ النجوم
+var ARL_UNLOCK_KEY = 'arl_unlocked_v1';
+var ARL_PASSWORD_CACHE = null;
+var ARL_PASSWORD_DEFAULT = 'AIU2026';
+
+function arlIsUnlocked(){
+  try{ return localStorage.getItem(ARL_UNLOCK_KEY) === 'yes'; }
+  catch(e){ return false; }
+}
+
+function arlSetUnlocked(){
+  try{ localStorage.setItem(ARL_UNLOCK_KEY, 'yes'); }catch(e){}
+}
+
+function arlLock(){
+  try{ localStorage.removeItem(ARL_UNLOCK_KEY); }catch(e){}
+  var lock = document.getElementById('lockScreen');
+  var main = document.getElementById('mainApp');
+  var input = document.getElementById('lockPassword');
+  var err = document.getElementById('lockError');
+  if(lock) lock.classList.remove('hidden');
+  if(main) main.classList.add('hidden');
+  if(input){
+    input.value = '';
+    setTimeout(function(){ try{ input.focus(); }catch(e){} }, 100);
+  }
+  if(err) err.classList.remove('show');
+}
+
+function arlLoadPassword(callback){
+  if(ARL_PASSWORD_CACHE){
+    callback(ARL_PASSWORD_CACHE);
+    return;
+  }
+
+  fetch('password.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function(res){
+      if(!res.ok) throw new Error('File not found');
+      return res.json();
+    })
+    .then(function(data){
+      if(data && typeof data.password === 'string' && data.password.length > 0){
+        ARL_PASSWORD_CACHE = data.password;
+        callback(ARL_PASSWORD_CACHE);
+      } else {
+        ARL_PASSWORD_CACHE = ARL_PASSWORD_DEFAULT;
+        callback(ARL_PASSWORD_CACHE);
+      }
+    })
+    .catch(function(err){
+      console.warn('password.json not found, using default:', ARL_PASSWORD_DEFAULT);
+      ARL_PASSWORD_CACHE = ARL_PASSWORD_DEFAULT;
+      callback(ARL_PASSWORD_CACHE);
+    });
+}
+
+function arlCheckPassword(input){
+  arlLoadPassword(function(correctPassword){
+    if(input === correctPassword){
+      arlSetUnlocked();
+      arlShowApp();
+    } else {
+      arlShowError();
+    }
+  });
+}
+
+function arlShowError(){
+  var err = document.getElementById('lockError');
+  var card = document.getElementById('lockCard');
+  var input = document.getElementById('lockPassword');
+  if(err) err.classList.add('show');
+  if(card){
+    card.classList.remove('lock-shake');
+    void card.offsetWidth;
+    card.classList.add('lock-shake');
+  }
+  if(input){
+    input.value = '';
+    try{ input.focus(); }catch(e){}
+  }
+}
+
+function arlShowApp(){
+  var lock = document.getElementById('lockScreen');
+  var main = document.getElementById('mainApp');
+  if(lock) lock.classList.add('hidden');
+  if(main) main.classList.remove('hidden');
+  if(typeof arlBootApp === 'function'){
+    arlBootApp();
+  }
+}
+
+function arlInitLock(){
+  if(arlIsUnlocked()){
+    arlShowApp();
+    return;
+  }
+
+  var input = document.getElementById('lockPassword');
+  var btn = document.getElementById('lockBtn');
+
+  if(btn){
+    btn.addEventListener('click', function(){
+      var val = (input && input.value) ? input.value.trim() : '';
+      if(!val) return;
+      arlCheckPassword(val);
+    });
+  }
+
+  if(input){
+    input.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        var val = this.value.trim();
+        if(val) arlCheckPassword(val);
+      }
+    });
+    setTimeout(function(){ try{ input.focus(); }catch(e){} }, 100);
+  }
+}
+
+/* 🚪 زر الخروج — نسخة مبسطة ومضمونة */
+function arlInitLogout(){
+  var btn = document.getElementById('logoutBtn');
+  if(!btn) return;
+
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    arlLock();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   الجزء الأصلي
+   ═══════════════════════════════════════════════════════════ */
+
 (function initStars(){
   const container = document.getElementById('starsContainer');
   if(!container) return;
@@ -690,7 +980,6 @@ h3{
   }
 })();
 
-// 🌊 فقاعات
 (function initBubbles(){
   const container = document.getElementById('bgAnimation');
   if(!container) return;
@@ -709,7 +998,6 @@ h3{
   }
 })();
 
-// إعادة النجوم عند resize
 let __starTimer;
 window.addEventListener('resize', () => {
   clearTimeout(__starTimer);
@@ -733,7 +1021,6 @@ window.addEventListener('resize', () => {
   }, 300);
 });
 
-// 🔊 الصوت
 let soundEnabled = true;
 let audioCtx = null;
 
@@ -808,11 +1095,12 @@ if(soundToggle){
   });
 }
 
-// ✨ Ripple
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('button');
   if(!btn || btn.disabled) return;
   if(btn.closest('.top-controls')) return;
+  if(btn.id === 'lockBtn') return;
+  if(btn.id === 'logoutBtn') return;
   playClick();
   const rect = btn.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height);
@@ -825,7 +1113,6 @@ document.addEventListener('click', (e) => {
   setTimeout(() => ripple.remove(), 600);
 }, true);
 
-// 🎉 Confetti
 function celebrate(){
   const colors = ['#2563eb','#16a34a','#f59e0b','#ec4899','#8b5cf6','#06b6d4'];
   const container = document.createElement('div');
@@ -843,7 +1130,6 @@ function celebrate(){
   setTimeout(() => container.remove(), 3000);
 }
 
-// 💫 Sparkle
 function sparkleOn(tubeId){
   const tube = document.getElementById('tube' + tubeId);
   if(!tube) return;
@@ -860,7 +1146,6 @@ function sparkleOn(tubeId){
   setTimeout(() => tube.classList.remove('pulse'), 700);
 }
 
-// ═══════════════ البيانات ═══════════════
 const D=['لا نتيجة مميزة'];
 const W='#f4f4f4';
 const ORANGE='#e8862a';
@@ -915,13 +1200,15 @@ let groupDecided=null,gasType=null,mgcTested=false;
 const $=id=>document.getElementById(id);
 const btns=(o,f)=>Object.keys(o).map(k=>`<button onclick="${f}('${k}')">${o[k]}</button>`).join('');
 
-$('mode').innerHTML='<option value="rand">مجهول عشوائي</option>'+Object.keys(A).map(k=>`<option value="${k}">${A[k].n}</option>`).join('');
-$('s1g').innerHTML=btns(S1G,'gt');
-$('cA').innerHTML=btns(CONF,'confA');
-$('cB').innerHTML=btns(CONF,'confB');
-$('cC').innerHTML=btns(CONF,'confC');
-$('s2').innerHTML=btns(CONF,'add');
-$('an').innerHTML=Object.keys(A).map(k=>`<button onclick="ans('${k}')">${A[k].n}</button>`).join('');
+function buildUI(){
+  $('mode').innerHTML='<option value="rand">مجهول عشوائي</option>'+Object.keys(A).map(k=>`<option value="${k}">${A[k].n}</option>`).join('');
+  $('s1g').innerHTML=btns(S1G,'gt');
+  $('cA').innerHTML=btns(CONF,'confA');
+  $('cB').innerHTML=btns(CONF,'confB');
+  $('cC').innerHTML=btns(CONF,'confC');
+  $('s2').innerHTML=btns(CONF,'add');
+  $('an').innerHTML=Object.keys(A).map(k=>`<button onclick="ans('${k}')">${A[k].n}</button>`).join('');
+}
 
 function unlock(id){$(id).classList.remove('locked')}
 function lock(id){$(id).classList.add('locked')}
@@ -1131,22 +1418,14 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// ═══════════════════════════════════════════════════════════
-// 🌓 زرّي الوضع: نهاري + ليلي — بسيط جداً
-// ═══════════════════════════════════════════════════════════
-
-// 🔑 مفتاح التخزين
 var ARL_THEME_KEY = 'arl_theme_simple';
 
-// 🎨 تطبيق الوضع
 function arlSetTheme(theme){
   if(theme === 'dark'){
     document.documentElement.setAttribute('data-theme', 'dark');
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
   }
-
-  // تحديث حالة الأزرار (يظهر إطار على الزر النشط)
   var lightBtn = document.getElementById('themeLight');
   var darkBtn = document.getElementById('themeDark');
   if(lightBtn && darkBtn){
@@ -1158,15 +1437,10 @@ function arlSetTheme(theme){
       darkBtn.classList.remove('active');
     }
   }
-
-  // حفظ الاختيار
   try{ localStorage.setItem(ARL_THEME_KEY, theme); }catch(e){}
-
-  // إعادة بناء النجوم
   setTimeout(rebuildStars, 50);
 }
 
-// 🌟 إعادة بناء النجوم بعد تغيير الوضع
 function rebuildStars(){
   var container = document.getElementById('starsContainer');
   if(!container) return;
@@ -1186,26 +1460,20 @@ function rebuildStars(){
   }
 }
 
-// 🚀 تهيئة أزرار الوضع — بعد ما الصفحة تخلص تحميل
 function arlInitThemeButtons(){
   var lightBtn = document.getElementById('themeLight');
   var darkBtn = document.getElementById('themeDark');
-
   if(!lightBtn || !darkBtn) return;
 
-  // استرجاع الوضع المحفوظ
   var saved = 'light';
   try{ saved = localStorage.getItem(ARL_THEME_KEY) || 'light'; }catch(e){}
   arlSetTheme(saved);
 
-  // زر النهاري
   lightBtn.addEventListener('click', function(e){
     e.stopPropagation();
     arlSetTheme('light');
     if(typeof playClick === 'function') playClick();
   });
-
-  // زر الليلي
   darkBtn.addEventListener('click', function(e){
     e.stopPropagation();
     arlSetTheme('dark');
@@ -1213,21 +1481,34 @@ function arlInitThemeButtons(){
   });
 }
 
-// التنفيذ
-if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', arlInitThemeButtons);
-} else {
+var arlAppBooted = false;
+
+function arlBootApp(){
+  if(arlAppBooted) return;
+  arlAppBooted = true;
+  buildUI();
   arlInitThemeButtons();
+  refillBag();
+  start();
 }
 
-// ═══════════════════════════════════════════════════════════
-// بدء التطبيق
-// ═══════════════════════════════════════════════════════════
-refillBag();
+// الدوال المطلوبة للـ onclick
+window.start = start;
+window.add = add;
+window.gt = gt;
+window.confA = confA;
+window.confB = confB;
+window.confC = confC;
+window.heat = heat;
+window.ans = ans;
 
 if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', start);
+  document.addEventListener('DOMContentLoaded', function(){
+    arlInitLock();
+    arlInitLogout();
+  });
 } else {
-  start();
+  arlInitLock();
+  arlInitLogout();
 }
 </script></body></html>
