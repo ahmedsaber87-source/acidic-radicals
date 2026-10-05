@@ -158,6 +158,7 @@ body{
   100%{transform:translateY(-10vh) scale(1);opacity:0}
 }
 
+/* 🔐 شاشة تسجيل الدخول */
 #authScreen{
   position:fixed;
   inset:0;
@@ -228,11 +229,35 @@ body{
 .auth-sub{
   font-size:13.5px;
   color:var(--mut);
-  margin:0 0 28px;
+  margin:0 0 24px;
   line-height:1.6;
+}
+#authPassword{
+  width:100%;
+  padding:14px 16px;
+  font-size:15px;
+  font-family:inherit;
+  color:var(--tx);
+  background:var(--bg-soft);
+  border:2px solid var(--bd);
+  border-radius:12px;
+  outline:none;
+  text-align:center;
+  letter-spacing:.15em;
+  transition:border-color .2s ease,background-color .2s ease;
+  box-sizing:border-box;
+}
+#authPassword:focus{
+  border-color:var(--ac);
+  background:var(--card);
+}
+#authPassword::placeholder{
+  letter-spacing:normal;
+  color:var(--mut);
 }
 #authLoginBtn{
   width:100%;
+  margin-top:14px;
   padding:14px 18px;
   font-size:15px;
   font-weight:600;
@@ -271,40 +296,18 @@ body{
   line-height:1.5;
 }
 #authError.show{opacity:1}
-
-#loadingScreen{
-  position:fixed;
-  inset:0;
-  z-index:10000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:16px;
-  background:var(--bg);
-  transition:opacity .3s ease, visibility .3s ease;
+.auth-shake{
+  animation:authShake .4s ease;
 }
-#loadingScreen.hidden{
-  opacity:0;
-  visibility:hidden;
-}
-.spinner{
-  width:44px;
-  height:44px;
-  border:4px solid var(--bd);
-  border-top-color:var(--ac);
-  border-radius:50%;
-  animation:spin 0.8s linear infinite;
-}
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-.loading-text{
-  font-size:14px;
-  color:var(--mut);
-  font-weight:500;
+@keyframes authShake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-6px)}
+  80%{transform:translateX(6px)}
 }
 
+/* 🚪 زر الخروج */
 .logout-btn{
   position:fixed;
   top:16px;
@@ -334,29 +337,6 @@ body{
 .logout-btn:active{transform:scale(.95)}
 @media (max-width:480px){
   .logout-btn{top:10px;right:10px;width:38px;height:38px;font-size:16px}
-}
-
-.user-info{
-  position:fixed;
-  top:16px;
-  right:70px;
-  z-index:100;
-  max-width:220px;
-  padding:8px 14px;
-  background:var(--card);
-  border:1px solid var(--bd);
-  border-radius:20px;
-  box-shadow:var(--shadow-sm);
-  font-size:11.5px;
-  color:var(--mut);
-  font-weight:500;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  transition:opacity .2s ease;
-}
-@media (max-width:480px){
-  .user-info{top:10px;right:60px;max-width:140px;font-size:10.5px;padding:6px 10px}
 }
 
 #mainApp{transition:opacity .3s ease}
@@ -723,29 +703,24 @@ h3{
 <div class="stars" id="starsContainer"></div>
 <div class="bg-animation" id="bgAnimation"></div>
 
-<!-- ⏳ شاشة التحميل -->
-<div id="loadingScreen">
-  <div class="spinner"></div>
-  <div class="loading-text">جاري التحميل...</div>
-</div>
-
-<!-- 🔐 شاشة تسجيل الدخول -->
-<div id="authScreen" class="hidden">
-  <div class="auth-card">
+<!-- 🔐 شاشة القفل -->
+<div id="authScreen">
+  <div class="auth-card" id="authCard">
     <span class="auth-icon">🔐</span>
     <div class="auth-univ">Alamein International University</div>
     <h2 class="auth-title">Acidic Radicals Lab</h2>
     <p class="auth-sub">
-      Sign in with your university email<br>
-      <span style="font-size:12px">(only @aiu.edu.eg emails allowed)</span>
+      Enter the password to access the lab
     </p>
 
+    <input type="password" id="authPassword" placeholder="Password" autocomplete="off" />
+
     <button type="button" id="authLoginBtn">
-      <span>✉️</span>
-      <span>Sign in with Email</span>
+      <span>🔓</span>
+      <span>Unlock</span>
     </button>
 
-    <div id="authError"></div>
+    <div id="authError">❌ Incorrect password</div>
   </div>
 </div>
 
@@ -758,8 +733,7 @@ h3{
     <button type="button" id="themeDark" title="Dark mode">🌙</button>
   </div>
 
-  <div class="user-info" id="userInfo">👤 ...</div>
-  <button type="button" class="logout-btn" id="logoutBtn" title="Sign out">🚪</button>
+  <button type="button" class="logout-btn" id="logoutBtn" title="Lock">🚪</button>
 
   <div class="header">
     <div class="univ">Alamein International University</div>
@@ -871,123 +845,77 @@ h3{
 
 </div><!-- /#mainApp -->
 
-<!-- Auth0 SDK -->
-<script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
-
 <script>
 /* ═══════════════════════════════════════════════════════════
-   🔐 Auth0 Configuration
+   🔐 إعدادات الموقع
    ═══════════════════════════════════════════════════════════ */
-const AUTH0_DOMAIN = 'dev-y7trwb8kl8quovvw.us.auth0.com';
-const AUTH0_CLIENT_ID = 'Xb8GG2KmWimOVk9iOKAfIx65qbHDnSTS';
-const AUTH0_REDIRECT_URI = 'https://acidic-radicals.pages.dev';
 
-let auth0Client = null;
+// 🔑 كلمة السر — غيّرها زي ما تحب
+const SITE_PASSWORD = 'AIU2026';
 
-// تهيئة Auth0
-async function initAuth0(){
-  auth0Client = await auth0.createAuth0Client({
-    domain: AUTH0_DOMAIN,
-    clientId: AUTH0_CLIENT_ID,
-    authorizationParams: {
-      redirect_uri: AUTH0_REDIRECT_URI,
-      connection: 'email',
-      scope: 'openid profile email'
-    },
-    cacheLocation: 'localstorage',
-    useRefreshTokens: true
-  });
+// 🔒 مفتاح التخزين
+const UNLOCK_KEY = 'arl_unlocked_v3';
 
-  // معالجة الـ callback بعد الرجوع من Auth0
-  if(window.location.search.includes('code=') && window.location.search.includes('state=')){
-    try{
-      await auth0Client.handleRedirectCallback();
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }catch(e){
-      console.error('Callback error:', e);
-    }
-  }
+/* ═══════════════════════════════════════════════════════════
+   🔐 نظام القفل
+   ═══════════════════════════════════════════════════════════ */
+
+function isUnlocked(){
+  try{ return localStorage.getItem(UNLOCK_KEY) === 'yes'; }
+  catch(e){ return false; }
 }
 
-// التحقق من حالة تسجيل الدخول
-async function checkAuth(){
-  try{
-    const isAuthenticated = await auth0Client.isAuthenticated();
-    if(isAuthenticated){
-      const user = await auth0Client.getUser();
-      showMainApp(user);
-    } else {
-      showAuthScreen();
-    }
-  }catch(e){
-    console.error('Auth check error:', e);
-    showAuthScreen();
-  }
+function setUnlocked(){
+  try{ localStorage.setItem(UNLOCK_KEY, 'yes'); }catch(e){}
 }
 
-// عرض شاشة تسجيل الدخول
-function showAuthScreen(){
-  document.getElementById('loadingScreen').classList.add('hidden');
+function lockSite(){
+  try{ localStorage.removeItem(UNLOCK_KEY); }catch(e){}
   document.getElementById('authScreen').classList.remove('hidden');
   document.getElementById('mainApp').classList.add('hidden');
+  const input = document.getElementById('authPassword');
+  const err = document.getElementById('authError');
+  if(input){ input.value = ''; setTimeout(function(){ try{input.focus();}catch(e){} }, 100); }
+  if(err) err.classList.remove('show');
 }
 
-// عرض الموقع الرئيسي
-function showMainApp(user){
-  document.getElementById('loadingScreen').classList.add('hidden');
+function showMainApp(){
   document.getElementById('authScreen').classList.add('hidden');
   document.getElementById('mainApp').classList.remove('hidden');
+  if(typeof arlBootApp === 'function') arlBootApp();
+}
 
-  // عرض الإيميل
-  if(user && user.email){
-    document.getElementById('userInfo').textContent = '👤 ' + user.email;
+function showError(){
+  const err = document.getElementById('authError');
+  const card = document.getElementById('authCard');
+  const input = document.getElementById('authPassword');
+  if(err) err.classList.add('show');
+  if(card){
+    card.classList.remove('auth-shake');
+    void card.offsetWidth;
+    card.classList.add('auth-shake');
   }
-
-  // تشغيل الموقع
-  if(typeof arlBootApp === 'function'){
-    arlBootApp();
+  if(input){
+    input.value = '';
+    try{ input.focus(); }catch(e){}
   }
 }
 
-// ✅ تسجيل الدخول — Passwordless Email (Magic Link)
-async function login(){
+function tryUnlock(){
+  const input = document.getElementById('authPassword');
   const btn = document.getElementById('authLoginBtn');
-  const err = document.getElementById('authError');
+  const val = (input && input.value) ? input.value : '';
+  if(!val) return;
   if(btn) btn.disabled = true;
-  if(err) err.classList.remove('show');
-
-  try{
-    await auth0Client.loginWithRedirect({
-      authorizationParams: {
-        redirect_uri: AUTH0_REDIRECT_URI,
-        connection: 'email',
-        scope: 'openid profile email'
-      }
-    });
-    // مش هيوصل هنا — هيتم redirect
-  }catch(e){
-    console.error('Login error:', e);
-    if(err){
-      err.textContent = '❌ Sign-in failed. Please try again.';
-      err.classList.add('show');
+  setTimeout(function(){
+    if(val === SITE_PASSWORD){
+      setUnlocked();
+      showMainApp();
+    } else {
+      showError();
     }
     if(btn) btn.disabled = false;
-  }
-}
-
-// تسجيل الخروج
-async function logout(){
-  try{
-    await auth0Client.logout({
-      logoutParams: {
-        returnTo: AUTH0_REDIRECT_URI
-      }
-    });
-  }catch(e){
-    console.error('Logout error:', e);
-    // fallback
-    window.location.href = 'https://' + AUTH0_DOMAIN + '/v2/logout?client_id=' + AUTH0_CLIENT_ID + '&returnTo=' + encodeURIComponent(AUTH0_REDIRECT_URI);
-  }
+  }, 200);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1525,11 +1453,15 @@ function arlBootApp(){
   start();
 }
 
-document.getElementById('authLoginBtn').addEventListener('click', login);
+/* ─────────── ربط الأزرار ─────────── */
+document.getElementById('authLoginBtn').addEventListener('click', tryUnlock);
+document.getElementById('authPassword').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); tryUnlock(); }
+});
 document.getElementById('logoutBtn').addEventListener('click', function(e){
   e.preventDefault();
   e.stopPropagation();
-  logout();
+  lockSite();
 });
 
 window.start = start;
@@ -1541,19 +1473,10 @@ window.confC = confC;
 window.heat = heat;
 window.ans = ans;
 
-async function boot(){
-  try{
-    await initAuth0();
-    await checkAuth();
-  }catch(e){
-    console.error('Boot error:', e);
-    showAuthScreen();
-  }
-}
-
-if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', boot);
+/* ─────────── بدء التطبيق ─────────── */
+if(isUnlocked()){
+  showMainApp();
 } else {
-  boot();
+  lockSite();
 }
 </script></body></html>
